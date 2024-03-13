@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nakhil/Config/gen/assets.gen.dart';
+import 'package:nakhil/Config/gen/fonts.gen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,11 +10,10 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -26,6 +28,28 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          "سلام خوبی من تستم",
+          style:
+              TextStyle(fontSize: 16, color: Colors.amber, fontFamily: "iran"),
+        ),
+      ),
+      body: Column(
+        children: [
+          const Center(
+            child: Text(
+              "سلام دوست عزیز گل",
+              style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.amber,
+                  fontFamily: FontFamily.iran),
+            ),
+          ),
+          Assets.images.header.image(),
+        ],
+      ),
+    );
   }
 }

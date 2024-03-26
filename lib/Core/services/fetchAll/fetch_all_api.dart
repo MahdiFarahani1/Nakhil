@@ -3,23 +3,32 @@ import 'package:nakhil/Core/services/fetchAll/models/title_news_model.dart';
 import 'package:nakhil/Core/services/fetchAll/provider_all.dart';
 
 class ServiceController extends GetxController {
-  List<TitleNewsModel>? data;
-  var status = Rx<StatusTitleNews>(Loading());
-  @override
-  void onInit() async {
-    await fetchData();
-    super.onInit();
-  }
+  dynamic data;
+  late StatusTitleNews status;
 
   fetchData() async {
+    status = Loading();
+    update();
+
+    // دریافت داده از سرور
     var response = await ProviderAll().fetchData(start: 0, limit: 20);
+
     if (response.statusCode == 200) {
-      List<dynamic> newsList = response.data['posts'];
-      List<TitleNewsModel> newsModel =
-          newsList.map((json) => TitleNewsModel.fromJson(json)).toList();
-      //  data?.clear();
-      //  data = [...newsModel];
-      status.value = Complete();
+      // تبدیل داده JSON به مدل‌های Dart
+      var newsModel = TitleNewsModel.fromJson(response.data);
+
+      // به‌روزرسانی داده و وضعیت برنامه
+
+      data = null;
+      data = newsModel;
+      status = Complete();
+      update();
+
+      // چاپ مدل اولیه پست‌ها به کنسول
+      print(newsModel.posts?.first.title);
+    } else {
+      // در صورتی که پاسخ از سرور با مشکل مواجه شود
+      status = Error();
       update();
     }
   }

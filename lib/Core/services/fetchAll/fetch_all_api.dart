@@ -7,30 +7,33 @@ class ServiceController extends GetxController {
   late StatusTitleNews status;
 
   fetchData() async {
-    status = Loading();
-    update();
-
-    // دریافت داده از سرور
-    var response = await ProviderAll().fetchData(start: 0, limit: 20);
-
-    if (response.statusCode == 200) {
-      // تبدیل داده JSON به مدل‌های Dart
-      var newsModel = TitleNewsModel.fromJson(response.data);
-
-      // به‌روزرسانی داده و وضعیت برنامه
-
-      data = null;
-      data = newsModel;
-      status = Complete();
+    try {
+      status = Loading();
       update();
 
-      // چاپ مدل اولیه پست‌ها به کنسول
-      print(newsModel.posts?.first.title);
-    } else {
-      // در صورتی که پاسخ از سرور با مشکل مواجه شود
+      var response = await ProviderAll().fetchData(start: 0, limit: 20);
+
+      if (response.statusCode == 200) {
+        var newsModel = TitleNewsModel.fromJson(response.data);
+
+        data = null;
+        data = newsModel;
+        status = Complete();
+        update();
+      } else {
+        status = Error();
+        update();
+      }
+    } catch (e) {
       status = Error();
       update();
     }
+  }
+
+  @override
+  void onInit() {
+    fetchData();
+    super.onInit();
   }
 }
 

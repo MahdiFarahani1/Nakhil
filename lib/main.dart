@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:nakhil/Config/app_routes/appRoutes.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Features/Splash/view/splashMain.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
         systemNavigationBarColor: ConstColor.baseColor));
     return GetMaterialApp(
       initialRoute: "/",
-      getPages: AppRoutes.pages,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: ConstColor.baseColor,

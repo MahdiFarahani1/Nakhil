@@ -17,7 +17,7 @@ class VController extends GetxController {
     });
     _videoController.addListener(() {
       if (_videoController.value.position == _videoController.value.duration) {
-        Get.offAndToNamed(NakhilHome.rn);
+        Get.offAll(const NakhilHome());
       }
     });
   }

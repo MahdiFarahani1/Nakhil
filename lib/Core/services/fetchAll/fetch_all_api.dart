@@ -1,17 +1,19 @@
 import 'package:get/get.dart';
-import 'package:nakhil/Core/services/fetchAll/models/title_news_model.dart';
-import 'package:nakhil/Core/services/fetchAll/provider_all.dart';
+import 'package:nakhil/Core/services/fetchAll/model/title_news_model.dart';
+import 'package:nakhil/Core/services/provider_all.dart';
 
 class ServiceController extends GetxController {
   dynamic data;
   late StatusTitleNews status;
+  int loadMoreCount = 0;
 
-  fetchData() async {
+  fetchData({required int start, required int limit}) async {
     try {
       status = Loading();
       update();
 
-      var response = await ProviderAll().fetchData(start: 0, limit: 20);
+      var response =
+          await ProviderAll().fetchAllData(start: start, limit: limit);
 
       if (response.statusCode == 200) {
         var newsModel = TitleNewsModel.fromJson(response.data);
@@ -32,8 +34,8 @@ class ServiceController extends GetxController {
 
   @override
   void onInit() {
-    fetchData();
     super.onInit();
+    fetchData(start: 0, limit: 20);
   }
 }
 

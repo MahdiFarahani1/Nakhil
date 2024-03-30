@@ -12,14 +12,23 @@ class NewsItem extends StatelessWidget {
   final String path;
   final String title;
   final String time;
+  final int id;
   const NewsItem(
-      {super.key, required this.path, required this.title, required this.time});
+      {super.key,
+      required this.path,
+      required this.title,
+      required this.time,
+      required this.id});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(const MainPage(), transition: Transition.leftToRight);
+        Get.to(
+            MainPage(
+              id: id,
+            ),
+            transition: Transition.leftToRight);
       },
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),

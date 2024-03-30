@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_method.dart';
 import 'package:nakhil/Core/extensions/layout_ex.dart';
 import 'package:nakhil/Core/services/fetchAll/fetch_all_api.dart';
-import 'package:nakhil/Core/services/fetchAll/models/title_news_model.dart';
+import 'package:nakhil/Core/services/fetchAll/model/title_news_model.dart';
 
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/utils/loading.dart';

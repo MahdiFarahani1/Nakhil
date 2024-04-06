@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 
 class ProviderAll {
-  Future<Response<dynamic>> fetchAllData(
-      {required int start, required int limit}) async {
+  Future<Response<dynamic>> fetchAllData({required int start}) async {
     var res = await Dio()
-        .get("https://palms-news.com/api/news?start=$start&limit=$limit");
+        .get("https://palms-news.com/api/news?start=$start&limit=20");
     return res;
   }
 

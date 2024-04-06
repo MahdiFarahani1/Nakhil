@@ -45,6 +45,9 @@ dependencies:
   cached_network_image: ^3.3.1
   delayed_widget: ^1.1.1
   flutter_widget_from_html: ^0.14.11
+  bloc: ^8.1.4
+  flutter_bloc: ^8.1.5
+  getwidget: ^4.0.0
 dev_dependencies:
   build_runner:
   flutter_gen_runner:

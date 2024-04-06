@@ -1,21 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_method.dart';
 import 'package:nakhil/Core/extensions/layout_ex.dart';
-import 'package:nakhil/Core/services/fetchAll/fetch_all_api.dart';
-import 'package:nakhil/Core/services/fetchAll/model/title_news_model.dart';
+import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
+import 'package:nakhil/Core/services/news_cubit/cubit/status.dart';
 
 import 'package:nakhil/Core/utils/esay_size.dart';
+import 'package:nakhil/Core/utils/format_date.dart';
 import 'package:nakhil/Core/utils/loading.dart';
 import 'package:nakhil/Core/widgets/costum_drawer.dart';
 import 'package:nakhil/Core/widgets/coustom-appbar.dart';
 import 'package:nakhil/Core/widgets/navbar.dart';
 import 'package:nakhil/Features/Search/controller/search_controller.dart';
+import 'package:nakhil/Features/Search/view/view-search.dart';
+import 'package:nakhil/Features/click_news/view/Main_news_page.dart';
 import 'package:nakhil/Features/home/controller/slider_images.dart';
 import 'package:nakhil/Features/home/widgets/category/all_category.dart';
-import 'package:nakhil/Features/home/widgets/news/all_news.dart';
+import 'package:nakhil/Features/home/widgets/news/news-item.dart';
 
 class NakhilHome extends StatefulWidget {
   const NakhilHome({super.key});
@@ -25,33 +30,111 @@ class NakhilHome extends StatefulWidget {
 }
 
 class _NakhilHomeState extends State<NakhilHome> {
-  var view = Get.put(ServiceController());
   var view2 = Get.put(SearchControllerMain());
+  late ScrollController scrollController;
+  final TextEditingController textEditingController = TextEditingController();
+
+  @override
+  void initState() {
+    BlocProvider.of<NewsCubit>(context).fetchData(start: 0, limit: 20);
+
+    scrollController = ScrollController()..addListener(_scrollListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    BlocProvider.of<NewsCubit>(context).loadMore(scrollController);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: CommonAppbar.appBar(context),
+        appBar: CommonAppbar.appBar(context,
+            textEditingController: textEditingController),
         drawer: CostumDrawer.customDrawer(context),
         bottomNavigationBar: NavBarCommon.navigation(),
-        body: Column(
-          children: [
-            sliderImages(context),
-            Cat.category(context),
-            AllNews.news(context)
-          ],
+        body: GetBuilder<SearchControllerMain>(
+          init: SearchControllerMain(),
+          initState: (_) {},
+          builder: (controller) {
+            return !controller.model.isSearchMode
+                ? Column(
+                    children: [
+                      sliderImages(context),
+                      Cat.category(context),
+                      news()
+                    ],
+                  )
+                : const ViewSearch();
+          },
         ),
       ),
     );
   }
 
+  Expanded news() {
+    return Expanded(child: BlocBuilder<NewsCubit, NewsState>(
+      builder: (context, state) {
+        if (state.status is LoadingA) {
+          return SizedBox(
+            width: EsaySize.width(context),
+            child: CostumLoading.fadingCircle(context),
+          );
+        }
+        if (state.status is CompleteA) {
+          var data = state.data;
+
+          return Column(
+            children: [
+              Expanded(
+                child: Container(
+                  margin: const EdgeInsets.only(top: 8, bottom: 8),
+                  width: double.infinity,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    controller: scrollController,
+                    itemBuilder: (context, index) {
+                      return NewsItem(
+                        id: data![index].id!,
+                        time: FormatData.result(data[index].dateTime!),
+                        title: data[index].title!,
+                        path:
+                            "${COnstMethod.baseImageUrlLow}${data[index].img!}",
+                      );
+                    },
+                    itemCount: data?.length,
+                  ),
+                ),
+              ),
+              if (state.isLoadMoreRunning)
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: CostumLoading.fadingCircle(context),
+                )
+            ],
+          );
+        }
+        if (state.status is ErrorA) {
+          return const Center(child: Text("Error"));
+        }
+        return const SizedBox.shrink();
+      },
+    ));
+  }
+
   Widget sliderImages(BuildContext context) {
-    return GetBuilder<ServiceController>(
-      builder: (controller) {
-        if (controller.status is Complete) {
-          var data = controller.data as TitleNewsModel;
+    return BlocBuilder<NewsCubit, NewsState>(
+      builder: (context, state) {
+        if (state.status is CompleteA) {
+          var data = state.data;
           return Padding(
             padding: const EdgeInsets.all(12.0),
             child: GetBuilder<SliderController>(
@@ -72,23 +155,28 @@ class _NakhilHomeState extends State<NakhilHome> {
                   ),
                   itemCount: 4,
                   itemBuilder: (context, index, realIndex) {
-                    int apiIndex = data.posts!.length - 4 + index;
+                    int apiIndex = data!.length - 4 + index;
 
                     return SizedBox(
                       height: EsaySize.height(context) / 4,
                       width: EsaySize.width(context),
                       child: Stack(children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: CachedNetworkImage(
-                              width: EsaySize.width(context),
-                              height: EsaySize.height(context) / 4,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) {
-                                return CostumLoading.loadCircle(context);
-                              },
-                              imageUrl:
-                                  "${COnstMethod.baseImageUrlHight}${data.posts![apiIndex].img!}"),
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(MainPage(id: data[apiIndex].id!));
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: CachedNetworkImage(
+                                width: EsaySize.width(context),
+                                height: EsaySize.height(context) / 4,
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) {
+                                  return CostumLoading.loadCircle(context);
+                                },
+                                imageUrl:
+                                    "${COnstMethod.baseImageUrlHight}${data[apiIndex].img!}"),
+                          ),
                         ),
                         Align(
                           alignment: Alignment.bottomCenter,
@@ -127,7 +215,7 @@ class _NakhilHomeState extends State<NakhilHome> {
                                         width: EsaySize.width(context) * 0.5,
                                         height: EsaySize.height(context) / 18,
                                         child: Text(
-                                          data.posts![apiIndex].title!,
+                                          data[apiIndex].title!,
                                           maxLines: 2,
                                           textAlign: TextAlign.justify,
                                           style: const TextStyle(
@@ -167,7 +255,7 @@ class _NakhilHomeState extends State<NakhilHome> {
             ),
           );
         }
-        if (controller.status is Loading) {
+        if (state.status is LoadingA) {
           return Expanded(
               child: SizedBox(
                   width: EsaySize.width(context),

@@ -3,12 +3,15 @@ import 'package:nakhil/Features/home/model/nav_index.dart';
 
 class NavController extends GetxController {
   late NavModel model;
-  NavController() {
-    model = NavModel();
-  }
 
   changeState(int newIndex) {
     model.changeState(newIndex);
     update();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    model = NavModel();
   }
 }

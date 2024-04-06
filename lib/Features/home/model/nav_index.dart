@@ -1,5 +1,5 @@
 class NavModel {
-  int _index = 0;
+  static int _index = 0;
 
   int get index => _index;
 

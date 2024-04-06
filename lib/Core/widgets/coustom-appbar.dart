@@ -1,14 +1,19 @@
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/gen/assets.gen.dart';
+import 'package:nakhil/Core/services/fetchSearch/cubit/search_cubit.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Features/Search/controller/search_controller.dart';
+import 'package:nakhil/Features/Search/model/model_save_value_search.dart';
 
 class CommonAppbar {
   static var view = Get.put(SearchControllerMain());
-  static AppBar appBar(BuildContext context, {bool isCickMode = false}) {
+  static AppBar appBar(BuildContext context,
+      {bool isCickMode = false,
+      required TextEditingController textEditingController}) {
     return AppBar(
       backgroundColor: ConstColor.baseColor,
       centerTitle: true,
@@ -56,7 +61,11 @@ class CommonAppbar {
           init: SearchControllerMain(),
           builder: (controller) {
             if (controller.model.isSearchMode) {
-              return textFeild(context);
+              return Builder(builder: (context) {
+                SearchValue.sctitle = 1;
+                SearchValue.sctxt = 1;
+                return textFeild(context, textEditingController, isCickMode);
+              });
             }
             return DelayedWidget(
               delayDuration: const Duration(milliseconds: 300),
@@ -67,9 +76,14 @@ class CommonAppbar {
                 margin: const EdgeInsets.all(8),
                 decoration: decor(),
                 child: IconButton(
-                  icon: Assets.images.search.image(),
+                  icon: !isCickMode
+                      ? Assets.images.search.image()
+                      : Icon(
+                          Icons.newspaper,
+                          color: ConstColor.baseColor,
+                        ),
                   onPressed: () {
-                    controller.changeState();
+                    !isCickMode ? controller.changeState() : null;
                   },
                 ),
               ),
@@ -80,7 +94,8 @@ class CommonAppbar {
     );
   }
 
-  static Widget textFeild(BuildContext context) {
+  static Widget textFeild(
+      BuildContext context, TextEditingController txt, bool isClick) {
     return SizedBox(
       width: EsaySize.width(context),
       height: 38,
@@ -88,27 +103,49 @@ class CommonAppbar {
         padding: const EdgeInsets.symmetric(horizontal: 25),
         child: DelayedWidget(
           delayDuration: const Duration(milliseconds: 300),
-          child: TextField(
-            maxLines: 1,
-            textAlignVertical: TextAlignVertical.center,
-            cursorColor: ConstColor.baseColor,
-            cursorHeight: 15,
-            decoration: InputDecoration(
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: ConstColor.baseColor),
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  borderSide: BorderSide(color: ConstColor.baseColor)),
-              fillColor: Colors.white,
-              filled: true,
-              suffixIcon: IconButton(
-                  onPressed: () {
-                    view.changeState();
-                  },
-                  icon: const Icon(Icons.close)),
-            ),
+          child: BlocBuilder<SearchCubit, SearchState>(
+            builder: (context, state) {
+              return TextField(
+                onChanged: (value) {
+                  SearchValue.sw = value;
+                },
+                controller: txt,
+                onSubmitted: (value) {
+                  print(
+                      "sw ${SearchValue.sw} || sctxt ${SearchValue.sctxt} || sctitle ${SearchValue.sctitle} ||");
+
+                  BlocProvider.of<SearchCubit>(context).search(
+                      start: 0,
+                      sw: SearchValue.sw,
+                      sctitle: SearchValue.sctitle,
+                      sctxt: SearchValue.sctxt,
+                      categoryID: SearchValue.categoryID);
+                },
+                maxLines: 1,
+                textAlignVertical: TextAlignVertical.center,
+                cursorColor: ConstColor.baseColor,
+                cursorHeight: 15,
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: ConstColor.baseColor),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      borderSide: BorderSide(color: ConstColor.baseColor)),
+                  fillColor: Colors.white,
+                  filled: true,
+                  suffixIcon: IconButton(
+                      onPressed: () {
+                        if (isClick) {}
+                        view.changeState();
+                        txt.clear();
+                        BlocProvider.of<SearchCubit>(context).initPage();
+                      },
+                      icon: const Icon(Icons.close)),
+                ),
+              );
+            },
           ),
         ),
       ),

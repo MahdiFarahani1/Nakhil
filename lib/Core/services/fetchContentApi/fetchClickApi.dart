@@ -19,12 +19,17 @@ class ServiceClickController extends GetxController {
         data = null;
         data = newsModel;
         status = ClickComplete();
+        print("copm!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         update();
       } else {
+        print("errrr!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         status = ClickError();
         update();
       }
     } catch (e) {
+      print("errrr!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
       print(e);
       status = ClickError();
       update();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/const/const_method.dart';
+import 'package:nakhil/Core/extensions/variyable_ex.dart';
 import 'package:nakhil/Core/gen/assets.gen.dart';
 import 'package:nakhil/Core/services/fetchContentApi/fetchClickApi.dart';
 import 'package:nakhil/Core/services/fetchContentApi/model/content_model.dart';
@@ -23,10 +24,18 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final TextEditingController textEditingController = TextEditingController();
+
   @override
   void initState() {
     fetchData();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
   }
 
   void fetchData() async {
@@ -39,7 +48,8 @@ class _MainPageState extends State<MainPage> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: CommonAppbar.appBar(context, isCickMode: true),
+        appBar: CommonAppbar.appBar(context,
+            isCickMode: true, textEditingController: textEditingController),
         drawer: CostumDrawer.customDrawer(context),
         bottomNavigationBar: NavBarCommon.navigation(),
         body: GetBuilder<ServiceClickController>(
@@ -78,18 +88,10 @@ class _MainPageState extends State<MainPage> {
                     ),
                     titleUi(
                         title: data.post![0].title!,
-                        time: data.post![0].dateTime!),
-                    const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        "وكالة نخيل عراقي/ خاص ",
-                        style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                        time: data.post![0].dateTime!,
+                        category: data.post![0].categoryId!.categoryCheker()),
                     Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 12),
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
                       child: HtmlWidget('''
   <div style="text-align: justify;">
     $content
@@ -107,7 +109,8 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget titleUi({required int time, required String title}) {
+  Widget titleUi(
+      {required int time, required String title, required String category}) {
     return Padding(
       padding: const EdgeInsets.all(25.0),
       child: Row(
@@ -132,9 +135,9 @@ class _MainPageState extends State<MainPage> {
                 EsaySize.gap(8),
                 Row(
                   children: [
-                    const Text(
-                      "حسین حسین",
-                      style: TextStyle(fontSize: 12, color: Colors.grey),
+                    Text(
+                      category,
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                     EsaySize.gap(6),
                     const Text(

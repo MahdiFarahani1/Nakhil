@@ -10,9 +10,9 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: iran
-  static const String iran = 'iran';
+  /// Font family: bloom
+  static const String bloom = 'bloom';
 
-  /// Font family: usa
-  static const String usa = 'usa';
+  /// Font family: neue
+  static const String neue = 'neue';
 }

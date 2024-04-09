@@ -28,6 +28,7 @@ class NewsItem extends StatelessWidget {
             MainPage(
               id: id,
             ),
+            arguments: false,
             transition: Transition.leftToRight);
       },
       child: Container(

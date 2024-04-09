@@ -9,11 +9,19 @@ part 'news_state.dart';
 class NewsCubit extends Cubit<NewsState> {
   NewsCubit() : super(NewsState(status: LoadingA()));
 
-  fetchData({required int start, required int limit}) async {
+  fetchData(
+      {required int start,
+      required int limit,
+      required int catId,
+      bool isArt = false}) async {
+    emit(NewsState(status: LoadingA()));
     try {
-      var response = await ProviderAll().fetchAllData(
-        start: start,
-      );
+      var response = !isArt
+          ? await ProviderAll().fetchAllData(
+              categoryid: catId,
+              start: start,
+            )
+          : await ProviderAll().fetchArtData();
 
       if (response.statusCode == 200) {
         List<dynamic> newsList = response.data['posts'];
@@ -29,16 +37,17 @@ class NewsCubit extends Cubit<NewsState> {
     }
   }
 
-  loadMore(ScrollController controller) async {
+  loadMore(ScrollController controller, int catid) async {
     if (state.hasNextPage == true &&
         state.isLoadMoreRunning == false &&
         controller.position.extentAfter < 300) {
       emit(state.copyWith(isLoadMoreRunning: true));
+      numberCat += 20;
+      state.loadMoreCount += numberCat;
+
       try {
-        state.loadMoreCount += 20;
-        var response = await ProviderAll().fetchAllData(
-          start: state.loadMoreCount,
-        );
+        var response = await ProviderAll()
+            .fetchAllData(start: state.loadMoreCount, categoryid: catid);
 
         if (response.statusCode == 200) {
           List<dynamic> newsList = response.data['posts'];
@@ -57,3 +66,5 @@ class NewsCubit extends Cubit<NewsState> {
     }
   }
 }
+
+int numberCat = 0;

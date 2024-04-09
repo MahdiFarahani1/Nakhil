@@ -33,7 +33,7 @@ class CommonAppbar {
       leading: GetBuilder<SearchControllerMain>(
         init: SearchControllerMain(),
         builder: (controller) {
-          if (controller.model.isSearchMode) {
+          if (controller.model.isSearchMode && !isCickMode) {
             return const SizedBox();
           }
           return DelayedWidget(
@@ -60,34 +60,33 @@ class CommonAppbar {
         GetBuilder<SearchControllerMain>(
           init: SearchControllerMain(),
           builder: (controller) {
-            if (controller.model.isSearchMode) {
+            if (controller.model.isSearchMode && !isCickMode) {
               return Builder(builder: (context) {
                 SearchValue.sctitle = 1;
                 SearchValue.sctxt = 1;
                 return textFeild(context, textEditingController, isCickMode);
               });
             }
-            return DelayedWidget(
-              delayDuration: const Duration(milliseconds: 300),
-              animation: DelayedAnimations.SLIDE_FROM_LEFT,
-              child: Container(
-                width: 40,
-                height: 40,
-                margin: const EdgeInsets.all(8),
-                decoration: decor(),
-                child: IconButton(
-                  icon: !isCickMode
-                      ? Assets.images.search.image()
-                      : Icon(
-                          Icons.newspaper,
-                          color: ConstColor.baseColor,
-                        ),
-                  onPressed: () {
-                    !isCickMode ? controller.changeState() : null;
-                  },
-                ),
-              ),
-            );
+            return !isCickMode
+                ? DelayedWidget(
+                    delayDuration: const Duration(milliseconds: 300),
+                    animation: DelayedAnimations.SLIDE_FROM_LEFT,
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      margin: const EdgeInsets.all(8),
+                      decoration: decor(),
+                      child: IconButton(
+                        icon: !isCickMode
+                            ? Assets.images.search.image()
+                            : const SizedBox(),
+                        onPressed: () {
+                          !isCickMode ? controller.changeState() : null;
+                        },
+                      ),
+                    ),
+                  )
+                : const SizedBox();
           },
         ),
       ],
@@ -98,9 +97,12 @@ class CommonAppbar {
       BuildContext context, TextEditingController txt, bool isClick) {
     return SizedBox(
       width: EsaySize.width(context),
-      height: 38,
+      height: 45,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
+        padding: const EdgeInsets.only(
+          left: 25,
+          right: 25,
+        ),
         child: DelayedWidget(
           delayDuration: const Duration(milliseconds: 300),
           child: BlocBuilder<SearchCubit, SearchState>(
@@ -111,9 +113,6 @@ class CommonAppbar {
                 },
                 controller: txt,
                 onSubmitted: (value) {
-                  print(
-                      "sw ${SearchValue.sw} || sctxt ${SearchValue.sctxt} || sctitle ${SearchValue.sctitle} ||");
-
                   BlocProvider.of<SearchCubit>(context).search(
                       start: 0,
                       sw: SearchValue.sw,

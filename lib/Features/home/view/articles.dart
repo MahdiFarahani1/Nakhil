@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_method.dart';
+import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
 import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
 import 'package:nakhil/Core/services/news_cubit/cubit/status.dart';
+import 'package:nakhil/Core/utils/category.dart';
 
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/utils/format_date.dart';
@@ -15,6 +17,7 @@ import 'package:nakhil/Core/widgets/navbar.dart';
 import 'package:nakhil/Features/Search/controller/search_controller.dart';
 import 'package:nakhil/Features/Search/view/view-search.dart';
 import 'package:nakhil/Features/home/widgets/category/all_category.dart';
+import 'package:nakhil/Features/home/widgets/cubit/select_category_cubit.dart';
 import 'package:nakhil/Features/home/widgets/news/news-item.dart';
 
 class Articles extends StatefulWidget {
@@ -25,11 +28,19 @@ class Articles extends StatefulWidget {
 }
 
 class _ArticlesState extends State<Articles> {
+  int selectIndex = 0;
+  List<bool> boolList = List.generate(categoryId.length, (index) => false);
+
   final TextEditingController textEditingController = TextEditingController();
   late ScrollController scrollController;
   @override
   void initState() {
-    BlocProvider.of<NewsCubit>(context).fetchData(start: 0, limit: 20);
+    Art.isAretMode = false;
+
+    BlocProvider.of<NewsCubit>(context).fetchData(
+        start: 0,
+        limit: 20,
+        catId: BlocProvider.of<SelectCategoryCubit>(context).state.catId);
 
     scrollController = ScrollController()..addListener(_scrollListener);
     super.initState();
@@ -43,7 +54,8 @@ class _ArticlesState extends State<Articles> {
   }
 
   void _scrollListener() {
-    BlocProvider.of<NewsCubit>(context).loadMore(scrollController);
+    BlocProvider.of<NewsCubit>(context).loadMore(scrollController,
+        BlocProvider.of<SelectCategoryCubit>(context).state.catId);
   }
 
   @override
@@ -61,7 +73,12 @@ class _ArticlesState extends State<Articles> {
                   ? Column(
                       children: [
                         EsaySize.gap(7),
-                        Cat.category(context),
+                        BlocBuilder<SelectCategoryCubit, SelectCategoryState>(
+                          builder: (context, state) {
+                            return Cat().category(
+                                context, state.selectIndex, state.boolList);
+                          },
+                        ),
                         EsaySize.gap(7),
                         Expanded(child: BlocBuilder<NewsCubit, NewsState>(
                           builder: (context, state) {

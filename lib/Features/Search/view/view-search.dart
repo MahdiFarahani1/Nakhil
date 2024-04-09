@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/const/const_method.dart';
+import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
 import 'package:nakhil/Core/services/fetchSearch/cubit/search_cubit.dart';
 import 'package:nakhil/Core/services/fetchSearch/cubit/status.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
@@ -21,6 +22,8 @@ class _ViewSearchState extends State<ViewSearch> {
   late ScrollController scrollController;
   @override
   void initState() {
+    Art.isAretMode = false;
+
     scrollController = ScrollController()..addListener(_scrollListener);
     super.initState();
   }

@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/const/const_method.dart';
+import 'package:nakhil/Core/dataBase/model.dart';
 import 'package:nakhil/Core/extensions/variyable_ex.dart';
 import 'package:nakhil/Core/gen/assets.gen.dart';
-import 'package:nakhil/Core/services/fetchContentApi/fetchClickApi.dart';
+import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
 import 'package:nakhil/Core/services/fetchContentApi/model/content_model.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/utils/format_date.dart';
@@ -14,6 +16,7 @@ import 'package:nakhil/Core/widgets/costum_drawer.dart';
 import 'package:nakhil/Core/widgets/coustom-appbar.dart';
 import 'package:nakhil/Core/widgets/navbar.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:nakhil/main.dart';
 
 class MainPage extends StatefulWidget {
   final int id;
@@ -24,11 +27,15 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  bool iconSelect = false;
   final TextEditingController textEditingController = TextEditingController();
 
   @override
   void initState() {
-    fetchData();
+    iconSelect = iconSave.get("iconSelect${widget.id}") ?? false;
+    BlocProvider.of<ContentCubit>(context).fetchData(
+      id: widget.id,
+    );
     super.initState();
   }
 
@@ -36,11 +43,6 @@ class _MainPageState extends State<MainPage> {
   void dispose() {
     textEditingController.dispose();
     super.dispose();
-  }
-
-  void fetchData() async {
-    var controll = Get.put(ServiceClickController());
-    await controll.fetchData(id: widget.id);
   }
 
   @override
@@ -52,18 +54,18 @@ class _MainPageState extends State<MainPage> {
             isCickMode: true, textEditingController: textEditingController),
         drawer: CostumDrawer.customDrawer(context),
         bottomNavigationBar: NavBarCommon.navigation(),
-        body: GetBuilder<ServiceClickController>(
-          builder: (controller) {
-            if (controller.status is ClickLoading) {
+        body: BlocBuilder<ContentCubit, ContentState>(
+          builder: (context, state) {
+            if (state.status is ClickLoading) {
               return Center(
                 child: CostumLoading.fadingCircle(context),
               );
             }
-            if (controller.status is ClickError) {
+            if (state.status is ClickError) {
               return const Text("error");
             }
-            if (controller.status is ClickComplete) {
-              var data = controller.data as ContentModel;
+            if (state.status is ClickComplete) {
+              var data = state.data as ContentModel;
               String content = data.post![0].content!;
 
               return SingleChildScrollView(
@@ -87,11 +89,15 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     titleUi(
+                        id: data.post![0].id!,
                         title: data.post![0].title!,
                         time: data.post![0].dateTime!,
-                        category: data.post![0].categoryId!.categoryCheker()),
+                        category: data.post![0].categoryId!.categoryCheker(),
+                        img:
+                            "${COnstMethod.baseImageUrlHight}${data.post![0].img}"),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
                       child: HtmlWidget('''
   <div style="text-align: justify;">
     $content
@@ -110,7 +116,11 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget titleUi(
-      {required int time, required String title, required String category}) {
+      {required int time,
+      required String title,
+      required String category,
+      required String img,
+      required int id}) {
     return Padding(
       padding: const EdgeInsets.all(25.0),
       child: Row(
@@ -168,16 +178,71 @@ class _MainPageState extends State<MainPage> {
                 ),
               ),
               EsaySize.gap(12),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                      color: ConstColor.baseColor,
-                      borderRadius: BorderRadius.circular(8)),
-                  child: Assets.images.save1.image(),
-                ),
+              StatefulBuilder(
+                builder: (context, setState) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(
+                        () {
+                          // if (isFavorite) {
+                          //   OperatorDatabase.addDatabase(
+                          //       context:
+                          //           context,
+                          //       view:
+                          //           view);
+                          // } else {
+                          //   OperatorDatabase.deleteDatabsae(
+                          //       id: view[
+                          //               0]
+                          //           .id!,
+                          //       context:
+                          //           context);
+                          // }
+                          if (!iconSelect) {
+                            iconSave.put("iconSelect${widget.id}", true);
+                          } else {
+                            iconSave.delete("iconSelect${widget.id}");
+                          }
+                          iconSelect = !iconSelect;
+                        },
+                      );
+
+                      var model = ItemDatabase(
+                          img: img, time: time, title: title, id: id);
+
+                      bool exists =
+                          box.values.any((element) => element.id == model.id);
+
+                      if (!exists) {
+                        box.add(model);
+                      } else {
+                        for (var value in box.values) {
+                          if (value.id == model.id) {
+                            var keyToRemove = box.keys.firstWhere(
+                                (key) => box.get(key) == value,
+                                orElse: () => null);
+                            if (keyToRemove != null) {
+                              box.delete(keyToRemove);
+                            }
+                          }
+                        }
+                      }
+                    },
+                    child: Container(
+                      width: 32,
+                      height: 32,
+                      decoration: BoxDecoration(
+                          color: ConstColor.baseColor,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: Icon(
+                        !iconSelect
+                            ? Icons.bookmark_add_outlined
+                            : Icons.bookmark,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                },
               )
             ],
           )

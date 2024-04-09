@@ -48,7 +48,13 @@ dependencies:
   bloc: ^8.1.4
   flutter_bloc: ^8.1.5
   getwidget: ^4.0.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  font_awesome_flutter: ^10.7.0
+  share: ^2.0.4
 dev_dependencies:
+  hive_generator: ^2.0.1
   build_runner:
   flutter_gen_runner:
   flutter_test:
@@ -89,14 +95,14 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: iran
+    - family: bloom
       fonts:
-        - asset: assets/fonts/IranNastaliq.ttf
+        - asset: assets/fonts/BloombergArabicBetav4-Bold.ttf
     #       - asset: fonts/Schyler-Italic.ttf
     #         style: italic
-    - family: usa
+    - family: neue
       fonts:
-        - asset: assets/fonts/Mj_Khateeb_0.ttf
+        - asset: assets/fonts/NeueHaasGroteskBloomberg.ttf
 
   #
   # For details regarding fonts from package dependencies,

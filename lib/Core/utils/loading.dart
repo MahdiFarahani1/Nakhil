@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:nakhil/Core/const/const_color.dart';
 
 class CostumLoading {
   static Widget loadCircle(BuildContext context) {
     return SpinKitRipple(
       itemBuilder: (context, index) {
-        return const DecoratedBox(
+        return DecoratedBox(
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.blueAccent,
+            color: ConstColor.baseColor,
           ),
         );
       },
@@ -19,9 +20,9 @@ class CostumLoading {
     return SpinKitThreeInOut(
       size: 35,
       itemBuilder: (context, index) {
-        return const DecoratedBox(
+        return DecoratedBox(
           decoration: BoxDecoration(
-            color: Colors.blueAccent,
+            color: ConstColor.baseColor,
           ),
         );
       },
@@ -32,9 +33,9 @@ class CostumLoading {
     return SpinKitFadingCircle(
       size: 35,
       itemBuilder: (context, index) {
-        return const DecoratedBox(
+        return DecoratedBox(
           decoration: BoxDecoration(
-            color: Colors.blueAccent,
+            color: ConstColor.baseColor,
           ),
         );
       },

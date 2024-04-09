@@ -4,7 +4,10 @@ import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/extensions/layout_ex.dart';
 import 'package:nakhil/Core/gen/assets.gen.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
+import 'package:nakhil/Features/articles/view_art.dart';
 import 'package:nakhil/Features/home/view/articles.dart';
+import 'package:nakhil/Features/home/view/nakhil_home.dart';
+import 'package:nakhil/Features/info/repository/aboutus_repository.dart';
 
 class CostumDrawer {
   static Widget customDrawer(BuildContext context) {
@@ -18,7 +21,7 @@ class CostumDrawer {
     }
 
     TextStyle stlebtnText() {
-      return const TextStyle(color: Colors.black);
+      return const TextStyle(color: Colors.black, fontSize: 14);
     }
 
     return Align(
@@ -41,21 +44,35 @@ class CostumDrawer {
                   ),
                   width: EsaySize.width(context) / 1.8,
                   height: 220,
-                  child: Assets.images.mainLogo.image(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Assets.images.mainLogo.image(),
+                      const Text(
+                        "الاصدار: 1.1",
+                        style: TextStyle(color: Colors.white),
+                      )
+                    ],
+                  ),
                 ),
               ),
               EsaySize.gap(25),
+              EsaySize.gap(8),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(const NakhilHome(),
+                      transition: Transition.leftToRight);
+                },
                 style: styleBtn(),
                 child: Text(
                   "الرئيسية",
                   style: stlebtnText(),
                 ),
               ),
-              EsaySize.gap(8),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(const Articles(), transition: Transition.leftToRight);
+                },
                 style: styleBtn(),
                 child: Text(
                   "الاخبار",
@@ -65,14 +82,36 @@ class CostumDrawer {
               EsaySize.gap(8),
               ElevatedButton(
                 onPressed: () {
-                  Get.to(const Articles(), transition: Transition.leftToRight);
+                  Get.to(ViewArt(), transition: Transition.leftToRight);
                 },
                 style: styleBtn(),
                 child: Text(
                   "المقالات",
                   style: stlebtnText(),
                 ),
-              )
+              ),
+              ElevatedButton(
+                onPressed: () {},
+                style: styleBtn(),
+                child: FittedBox(
+                  child: Text(
+                    "مشاركة التطبيق",
+                    style: stlebtnText(),
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  AboutRepository.launchUrl(AboutRepository.urlSite);
+                },
+                style: styleBtn(),
+                child: FittedBox(
+                  child: Text(
+                    "الموقع الرسمي",
+                    style: stlebtnText(),
+                  ),
+                ),
+              ),
             ],
           ),
         );

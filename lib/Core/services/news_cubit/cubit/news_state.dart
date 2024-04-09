@@ -8,7 +8,6 @@ class NewsState {
 
   bool hasNextPage;
   bool isLoadMoreRunning;
-
   NewsState(
       {required this.status,
       this.data,
@@ -22,6 +21,7 @@ class NewsState {
     int? loadMoreCount,
     bool? hasNextPage,
     bool? isLoadMoreRunning,
+    Map? sliderData,
   }) {
     return NewsState(
         status: status ?? this.status,

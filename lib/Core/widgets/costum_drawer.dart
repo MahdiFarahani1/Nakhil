@@ -8,6 +8,7 @@ import 'package:nakhil/Features/articles/view_art.dart';
 import 'package:nakhil/Features/home/view/articles.dart';
 import 'package:nakhil/Features/home/view/nakhil_home.dart';
 import 'package:nakhil/Features/info/repository/aboutus_repository.dart';
+import 'package:share/share.dart';
 
 class CostumDrawer {
   static Widget customDrawer(BuildContext context) {
@@ -91,7 +92,10 @@ class CostumDrawer {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Share.share(
+                      "https://play.google.com/store/apps/details?id=com.dijlahit.iraq_palm");
+                },
                 style: styleBtn(),
                 child: FittedBox(
                   child: Text(

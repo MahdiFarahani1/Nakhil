@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/extensions/layout_ex.dart';
-import 'package:nakhil/Core/gen/assets.gen.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/utils/loading.dart';
 import 'package:nakhil/Features/click_news/view/Main_news_page.dart';
@@ -26,6 +25,7 @@ class NewsItem extends StatelessWidget {
       onTap: () {
         Get.to(
             MainPage(
+              isArtMode: false,
               id: id,
             ),
             arguments: false,
@@ -80,21 +80,6 @@ class NewsItem extends StatelessWidget {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: GestureDetector(
-                onTap: () {},
-                child: Container(
-                  margin: const EdgeInsets.only(left: 8, bottom: 8),
-                  width: 27,
-                  height: 27,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4.0),
-                      image: DecorationImage(
-                          image: AssetImage(Assets.images.save.path))),
-                ),
-              ),
-            )
           ],
         ),
       ),

@@ -110,7 +110,10 @@ class _ViewArtState extends State<ViewArt> {
                         GestureDetector(
                           onTap: () {
                             Get.to(
-                              MainPage(id: stateNews.sliderData?[index]["id"]),
+                              MainPage(
+                                id: stateNews.sliderData?[index]["id"],
+                                isArtMode: true,
+                              ),
                             );
                           },
                           child: ClipRRect(

@@ -14,7 +14,7 @@ class Btn {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-            color: ConstColor.baseColor,
+            color: ConstColor.menuColor,
             borderRadius: BorderRadius.circular(4)),
         child: Icon(
           iconData,

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/const/const_method.dart';
@@ -17,10 +16,13 @@ import 'package:nakhil/Core/widgets/coustom-appbar.dart';
 import 'package:nakhil/Core/widgets/navbar.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:nakhil/main.dart';
+import 'package:share/share.dart';
 
+// ignore: must_be_immutable
 class MainPage extends StatefulWidget {
   final int id;
-  const MainPage({super.key, required this.id});
+  bool isArtMode;
+  MainPage({super.key, required this.id, this.isArtMode = false});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -94,7 +96,8 @@ class _MainPageState extends State<MainPage> {
                         time: data.post![0].dateTime!,
                         category: data.post![0].categoryId!.categoryCheker(),
                         img:
-                            "${COnstMethod.baseImageUrlHight}${data.post![0].img}"),
+                            "${COnstMethod.baseImageUrlHight}${data.post![0].img}",
+                        isArtMode: Art.isAretMode),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8),
@@ -120,7 +123,8 @@ class _MainPageState extends State<MainPage> {
       required String title,
       required String category,
       required String img,
-      required int id}) {
+      required int id,
+      required bool isArtMode}) {
     return Padding(
       padding: const EdgeInsets.all(25.0),
       child: Row(
@@ -167,7 +171,11 @@ class _MainPageState extends State<MainPage> {
           Column(
             children: [
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  isArtMode
+                      ? Share.share("https://palms-news.com/a$id")
+                      : Share.share("https://palms-news.com/n$id");
+                },
                 child: Container(
                   width: 32,
                   height: 32,

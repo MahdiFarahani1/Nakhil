@@ -177,6 +177,7 @@ class _NakhilHomeState extends State<NakhilHome> {
                           onTap: () {
                             Get.to(
                                 MainPage(
+                                  isArtMode: false,
                                   id: data[apiIndex].id!,
                                 ),
                                 arguments: false);

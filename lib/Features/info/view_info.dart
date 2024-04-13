@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/gen/assets.gen.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/widgets/costum_drawer.dart';
@@ -33,10 +34,10 @@ class Info extends StatelessWidget {
                       children: [
                         Container(
                           margin: const EdgeInsets.only(top: 20),
-                          width: EsaySize.width(context) * 0.9,
+                          width: EsaySize.width(context) * 0.97,
                           height: EsaySize.height(context) * 0.65,
                           decoration: BoxDecoration(
-                              color: Theme.of(context).primaryColor,
+                              color: ConstColor.menuColor,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(10))),
                           child: SingleChildScrollView(

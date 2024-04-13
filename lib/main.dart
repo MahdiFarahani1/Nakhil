@@ -13,6 +13,8 @@ import 'package:nakhil/Core/services/news_cubit/slider-bloc/slider_p_cubit.dart'
 import 'package:nakhil/Features/Splash/view/splashMain.dart';
 import 'package:nakhil/Features/home/cubit/nav_cubit.dart';
 import 'package:nakhil/Features/home/widgets/cubit/select_category_cubit.dart';
+import 'package:nakhil/Features/save/cubit/save_news_cubit.dart';
+import 'package:nakhil/Features/settings/cubit/settings_cubit.dart';
 
 late Box box;
 late Box iconSave;
@@ -55,8 +57,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SliderPCubit(),
         ),
-        // BlocProvider(
-        //   create: (context) => SliderPCubit(),
+        BlocProvider(
+          create: (context) => SaveNewsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SettingsCubit(),
+        ),
+        //     BlocProvider(
+        //   create: (context) => SettingsCubit(),
         // ),
       ],
       child: GetMaterialApp(

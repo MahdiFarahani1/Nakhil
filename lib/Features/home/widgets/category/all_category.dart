@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nakhil/Core/utils/category.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Features/home/widgets/category/category-item.dart';
 
 class Cat {
@@ -24,12 +26,18 @@ class Cat {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             return CatItem(
-              mapCat: categoryId,
+              mapCat:
+                  (BlocProvider.of<ControllerApp>(context).state.status is Nnews
+                      ? categoryIdNews
+                      : categoryIdAraghi),
               index: index,
               boolList: boolList,
             );
           },
-          itemCount: categoryId.length,
+          itemCount:
+              (BlocProvider.of<ControllerApp>(context).state.status is Nnews
+                  ? categoryIdNews.length
+                  : categoryIdAraghi.length),
           scrollDirection: Axis.horizontal,
         ),
       );

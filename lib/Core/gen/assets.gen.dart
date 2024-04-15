@@ -15,6 +15,9 @@ class $AssetsImagesGen {
   /// File path: assets/images/about.png
   AssetGenImage get about => const AssetGenImage('assets/images/about.png');
 
+  /// File path: assets/images/araghi.png
+  AssetGenImage get araghi => const AssetGenImage('assets/images/araghi.png');
+
   /// File path: assets/images/iraq-palm icon.png
   AssetGenImage get iraqPalmIcon =>
       const AssetGenImage('assets/images/iraq-palm icon.png');
@@ -29,6 +32,9 @@ class $AssetsImagesGen {
 
   /// File path: assets/images/menu.png
   AssetGenImage get menu => const AssetGenImage('assets/images/menu.png');
+
+  /// File path: assets/images/nnews.png
+  AssetGenImage get nnews => const AssetGenImage('assets/images/nnews.png');
 
   /// File path: assets/images/save-1.png
   AssetGenImage get save1 => const AssetGenImage('assets/images/save-1.png');
@@ -52,10 +58,12 @@ class $AssetsImagesGen {
   /// List of all assets
   List<AssetGenImage> get values => [
         about,
+        araghi,
         iraqPalmIcon,
         logoTx2,
         mainLogo,
         menu,
+        nnews,
         save1,
         save,
         saves,

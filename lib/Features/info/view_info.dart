@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/gen/assets.gen.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/widgets/costum_drawer.dart';
 
@@ -23,7 +22,7 @@ class Info extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         drawer: CostumDrawer.customDrawer(context),
-        bottomNavigationBar: NavBarCommon.navigation(),
+        bottomNavigationBar: NavBarCommon.navigation(context),
         appBar: CommonAppbar.appBar(context,
             textEditingController: textEditingController),
         body: GetBuilder<SearchControllerMain>(
@@ -35,17 +34,18 @@ class Info extends StatelessWidget {
                         Container(
                           margin: const EdgeInsets.only(top: 20),
                           width: EsaySize.width(context) * 0.97,
-                          height: EsaySize.height(context) * 0.65,
+                          height: EsaySize.height(context) * 0.6,
                           decoration: BoxDecoration(
-                              color: ConstColor.menuColor,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10))),
+                            color: ConstColor.menuColor,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(10),
+                            ),
+                          ),
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 EsaySize.gap(40),
-                                Assets.images.logoTx2.image(),
-                                EsaySize.gap(20),
+
                                 Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Text(
@@ -77,10 +77,11 @@ class Info extends StatelessWidget {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 25),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: Btn.allbtn(),
+                            children: Btn.allbtn(context),
                           ),
                         )
                       ],

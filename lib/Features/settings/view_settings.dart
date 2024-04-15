@@ -12,6 +12,7 @@ import 'package:nakhil/Core/widgets/navbar.dart';
 import 'package:nakhil/Features/Search/controller/search_controller.dart';
 import 'package:nakhil/Features/Search/view/view-search.dart';
 import 'package:nakhil/Features/settings/cubit/settings_cubit.dart';
+import 'package:nakhil/main.dart';
 
 class Settings extends StatelessWidget {
   final TextEditingController textEditingController = TextEditingController();
@@ -41,7 +42,7 @@ class Settings extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         drawer: CostumDrawer.customDrawer(context),
-        bottomNavigationBar: NavBarCommon.navigation(),
+        bottomNavigationBar: NavBarCommon.navigation(context),
         appBar: CommonAppbar.appBar(context,
             textEditingController: textEditingController),
         body: GetBuilder<SearchControllerMain>(
@@ -77,16 +78,16 @@ class Settings extends StatelessWidget {
             const Icon(
               FontAwesomeIcons.font,
               size: 30,
-              color: Colors.white,
+              color: Colors.black,
             ),
             Directionality(
               textDirection: TextDirection.ltr,
               child: SliderTheme(
                 data: const SliderThemeData(
-                  activeTrackColor: Colors.white,
+                  activeTrackColor: Colors.black,
                   trackHeight: 1,
                   inactiveTrackColor: Color.fromRGBO(158, 158, 158, 1),
-                  thumbColor: Colors.white,
+                  thumbColor: Colors.black,
                   inactiveTickMarkColor: Colors.grey,
                   activeTickMarkColor: Colors.transparent,
                 ),
@@ -101,7 +102,7 @@ class Settings extends StatelessWidget {
             ),
             Expanded(
               child: "بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ".readyText(
-                  style: const TextStyle(color: Colors.white, fontSize: 15)),
+                  style: const TextStyle(color: Colors.black, fontSize: 15)),
             )
           ],
         ));
@@ -122,7 +123,7 @@ class Settings extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 8),
                       child: "العنوان :".readyText(
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 15)),
+                              color: Colors.black, fontSize: 15)),
                     ),
                     Padding(
                       padding:
@@ -130,7 +131,7 @@ class Settings extends StatelessWidget {
                       child: const Icon(
                         Icons.text_fields,
                         size: 30,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -139,10 +140,10 @@ class Settings extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   child: SliderTheme(
                     data: const SliderThemeData(
-                        activeTrackColor: Colors.white,
+                        activeTrackColor: Colors.black,
                         trackHeight: 1,
                         inactiveTrackColor: Color.fromRGBO(158, 158, 158, 1),
-                        thumbColor: Colors.white,
+                        thumbColor: Colors.black,
                         inactiveTickMarkColor: Colors.grey,
                         activeTickMarkColor: Colors.transparent,
                         valueIndicatorColor: Colors.grey),
@@ -154,6 +155,7 @@ class Settings extends StatelessWidget {
                       onChanged: (value) {
                         BlocProvider.of<SettingsCubit>(context)
                             .changeTitle(value);
+                        iconSave.put("title", value.toInt());
                       },
                       label: '${state.fontsizeTitle}',
                     ),
@@ -162,7 +164,7 @@ class Settings extends StatelessWidget {
                 Expanded(
                   child: "بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ".readyText(
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: state.fontsizeTitle.toDouble())),
                 )
               ],
@@ -186,7 +188,7 @@ class Settings extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 8),
                       child: "النص :".readyText(
                           style: const TextStyle(
-                              color: Colors.white, fontSize: 15)),
+                              color: Colors.black, fontSize: 15)),
                     ),
                     Padding(
                       padding:
@@ -194,7 +196,7 @@ class Settings extends StatelessWidget {
                       child: const Icon(
                         Icons.text_fields,
                         size: 30,
-                        color: Colors.white,
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -203,10 +205,10 @@ class Settings extends StatelessWidget {
                   textDirection: TextDirection.ltr,
                   child: SliderTheme(
                     data: const SliderThemeData(
-                        activeTrackColor: Colors.white,
+                        activeTrackColor: Colors.black,
                         trackHeight: 1,
                         inactiveTrackColor: Color.fromRGBO(158, 158, 158, 1),
-                        thumbColor: Colors.white,
+                        thumbColor: Colors.black,
                         inactiveTickMarkColor: Colors.grey,
                         activeTickMarkColor: Colors.transparent,
                         valueIndicatorColor: Colors.grey),
@@ -217,6 +219,7 @@ class Settings extends StatelessWidget {
                       min: 10,
                       max: 21,
                       onChanged: (value) {
+                        iconSave.put("content", value.toInt());
                         BlocProvider.of<SettingsCubit>(context)
                             .changeContent(value);
                       },
@@ -226,7 +229,7 @@ class Settings extends StatelessWidget {
                 Expanded(
                   child: "بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ".readyText(
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: state.fontsizeContent.toDouble())),
                 )
               ],
@@ -247,7 +250,7 @@ class Settings extends StatelessWidget {
                 const Icon(
                   FontAwesomeIcons.brush,
                   size: 30,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -278,7 +281,9 @@ class Settings extends StatelessWidget {
       width: EsaySize.width(context) * 0.8,
       height: EsaySize.height(context) * 0.17,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8), color: ConstColor.menuColor),
+          border: Border.all(color: const Color.fromARGB(255, 199, 199, 199)),
+          borderRadius: BorderRadius.circular(8),
+          color: ConstColor.menuColor),
       child: child,
     );
   }
@@ -318,6 +323,7 @@ class Settings extends StatelessWidget {
                 if (col != null) {
                   BlocProvider.of<SettingsCubit>(context)
                       .changeTitleColor(col!);
+                  iconSave.put("boxcolor", col);
                 }
                 Navigator.pop(context);
               },

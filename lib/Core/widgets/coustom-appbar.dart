@@ -1,11 +1,13 @@
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/gen/assets.gen.dart';
 import 'package:nakhil/Core/services/fetchSearch/cubit/search_cubit.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Features/Search/controller/search_controller.dart';
 import 'package:nakhil/Features/Search/model/model_save_value_search.dart';
 
@@ -15,7 +17,6 @@ class CommonAppbar {
       {bool isCickMode = false,
       required TextEditingController textEditingController}) {
     return AppBar(
-      backgroundColor: ConstColor.baseColor,
       centerTitle: true,
       title: GetBuilder<SearchControllerMain>(
         init: SearchControllerMain(),
@@ -24,7 +25,22 @@ class CommonAppbar {
               ? DelayedWidget(
                   delayDuration: const Duration(milliseconds: 300),
                   child: (!isCickMode
-                      ? Assets.images.logoTx2.image()
+                      ? (BlocBuilder<ControllerApp, NaVconState>(
+                          builder: (context, state) {
+                            return state.status is Araghi
+                                ? const Text(
+                                    "نخيل عراقي",
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 18.5),
+                                  )
+                                : Text(
+                                    "نخيل نيوز",
+                                    style: TextStyle(
+                                        color: ColorNakhil.item,
+                                        fontSize: 18.5),
+                                  );
+                          },
+                        ))
                       : Assets.images.iraqPalmIcon.image()),
                 )
               : const SizedBox();
@@ -36,23 +52,30 @@ class CommonAppbar {
           if (controller.model.isSearchMode && !isCickMode) {
             return const SizedBox();
           }
-          return DelayedWidget(
-            delayDuration: const Duration(milliseconds: 300),
-            animation: DelayedAnimations.SLIDE_FROM_RIGHT,
-            child: Container(
-              width: 40,
-              height: 40,
-              margin: const EdgeInsets.all(8),
-              decoration: decor(),
-              child: Builder(builder: (context) {
-                return IconButton(
-                  icon: Assets.images.menu.image(),
-                  onPressed: () {
-                    Scaffold.of(context).openDrawer();
-                  },
-                );
-              }),
-            ),
+          return BlocBuilder<ControllerApp, NaVconState>(
+            builder: (context, state) {
+              return DelayedWidget(
+                delayDuration: const Duration(milliseconds: 300),
+                animation: DelayedAnimations.SLIDE_FROM_RIGHT,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  margin: const EdgeInsets.all(8),
+                  decoration: decor(),
+                  child: Builder(builder: (context) {
+                    return IconButton(
+                      icon: Icon(
+                        FontAwesomeIcons.barsStaggered,
+                        color: state.color2,
+                      ),
+                      onPressed: () {
+                        Scaffold.of(context).openDrawer();
+                      },
+                    );
+                  }),
+                ),
+              );
+            },
           );
         },
       ),
@@ -68,23 +91,33 @@ class CommonAppbar {
               });
             }
             return !isCickMode
-                ? DelayedWidget(
-                    delayDuration: const Duration(milliseconds: 300),
-                    animation: DelayedAnimations.SLIDE_FROM_LEFT,
-                    child: Container(
-                      width: 40,
-                      height: 40,
-                      margin: const EdgeInsets.all(8),
-                      decoration: decor(),
-                      child: IconButton(
-                        icon: !isCickMode
-                            ? Assets.images.search.image()
-                            : const SizedBox(),
-                        onPressed: () {
-                          !isCickMode ? controller.changeState() : null;
-                        },
-                      ),
-                    ),
+                ? BlocBuilder<ControllerApp, NaVconState>(
+                    builder: (context, state) {
+                      return DelayedWidget(
+                        delayDuration: const Duration(milliseconds: 300),
+                        animation: DelayedAnimations.SLIDE_FROM_LEFT,
+                        child: Container(
+                          width: 40,
+                          height: 40,
+                          margin: const EdgeInsets.all(8),
+                          decoration: decor(),
+                          child: IconButton(
+                            icon: !isCickMode
+                                ? Transform.rotate(
+                                    angle: 90 * 3.14159265359 / 180,
+                                    child: Icon(
+                                      FontAwesomeIcons.magnifyingGlass,
+                                      color: state.color2,
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            onPressed: () {
+                              !isCickMode ? controller.changeState() : null;
+                            },
+                          ),
+                        ),
+                      );
+                    },
                   )
                 : const SizedBox();
           },

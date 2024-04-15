@@ -1,5 +1,7 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nakhil/Core/utils/category.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 
 part 'select_category_state.dart';
 
@@ -7,11 +9,22 @@ class SelectCategoryCubit extends Cubit<SelectCategoryState> {
   SelectCategoryCubit()
       : super(SelectCategoryState(
             boolList: List.generate(
-                categoryId.length, (index) => index == 0 ? true : false)));
+                categoryIdNews.length, (index) => index == 0 ? true : false)));
 
-  changeState(int index) {
+  initState(BuildContext context) {
+    emit(state.copyWith(
+        boolList: List.generate(
+            (BlocProvider.of<ControllerApp>(context).state.status is Nnews
+                ? categoryIdNews.length
+                : categoryIdAraghi.length),
+            (index) => index == 0 ? true : false)));
+  }
+
+  changeState(int index, BuildContext context) {
     List<bool> updatedList = List.generate(
-      categoryId.length,
+      (BlocProvider.of<ControllerApp>(context).state.status is Nnews
+          ? categoryIdNews.length
+          : categoryIdAraghi.length),
       (i) => (i == index),
     );
     for (int i = 0; i < updatedList.length; i++) {

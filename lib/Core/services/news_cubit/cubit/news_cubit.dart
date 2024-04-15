@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:nakhil/Core/services/fetchAll/model/title_news_model.dart';
 import 'package:nakhil/Core/services/news_cubit/cubit/status.dart';
 import 'package:nakhil/Core/services/provider_all.dart';
@@ -13,15 +14,17 @@ class NewsCubit extends Cubit<NewsState> {
       {required int start,
       required int limit,
       required int catId,
-      bool isArt = false}) async {
+      bool isArt = false,
+      required BuildContext context}) async {
     emit(NewsState(status: LoadingA()));
     try {
       var response = !isArt
           ? await ProviderAll().fetchAllData(
+              context: context,
               categoryid: catId,
               start: start,
             )
-          : await ProviderAll().fetchArtData();
+          : await ProviderAll().fetchArtData(context: context);
 
       if (response.statusCode == 200) {
         List<dynamic> newsList = response.data['posts'];
@@ -33,11 +36,12 @@ class NewsCubit extends Cubit<NewsState> {
         emit(NewsState(status: ErrorA()));
       }
     } catch (e) {
+      print(e);
       emit(NewsState(status: ErrorA()));
     }
   }
 
-  loadMore(ScrollController controller, int catid) async {
+  loadMore(ScrollController controller, int catid, BuildContext context) async {
     if (state.hasNextPage == true &&
         state.isLoadMoreRunning == false &&
         controller.position.extentAfter < 300) {
@@ -46,8 +50,8 @@ class NewsCubit extends Cubit<NewsState> {
       state.loadMoreCount += numberCat;
 
       try {
-        var response = await ProviderAll()
-            .fetchAllData(start: state.loadMoreCount, categoryid: catid);
+        var response = await ProviderAll().fetchAllData(
+            start: state.loadMoreCount, categoryid: catid, context: context);
 
         if (response.statusCode == 200) {
           List<dynamic> newsList = response.data['posts'];

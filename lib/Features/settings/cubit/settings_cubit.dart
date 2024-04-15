@@ -1,14 +1,24 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:nakhil/main.dart';
 
 part 'settings_state.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
   SettingsCubit()
       : super(SettingsState(
-            fontsizeContent: 12,
-            fontsizeTitle: 16,
+            fontsizeContent: 14,
+            fontsizeTitle: 17,
             titleColor: Colors.black.value));
+
+  initSetting() async {
+    var content = await iconSave.get("content") ?? 14;
+    var title = await iconSave.get("title") ?? 17;
+    var colBox = await iconSave.get("boxcolor") ?? Colors.black.value;
+    emit(state.copyWith(
+        fontsizeContent: content, fontsizeTitle: title, titleColor: colBox));
+  }
+
   changeTitle(double value) {
     emit(state.copyWith(fontsizeTitle: value.toInt()));
   }

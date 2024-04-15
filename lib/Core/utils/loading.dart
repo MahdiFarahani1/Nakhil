@@ -1,42 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:nakhil/Core/const/const_color.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 
 class CostumLoading {
   static Widget loadCircle(BuildContext context) {
-    return SpinKitRipple(
-      itemBuilder: (context, index) {
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: ConstColor.baseColor,
-          ),
+    return BlocBuilder<ControllerApp, NaVconState>(
+      builder: (context, state) {
+        return SpinKitRipple(
+          itemBuilder: (context, index) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: state.status is Araghi
+                    ? ConstColor.baseColor
+                    : ColorNakhil.item,
+              ),
+            );
+          },
         );
       },
     );
   }
 
   static Widget loadLine(BuildContext context) {
-    return SpinKitThreeInOut(
-      size: 35,
-      itemBuilder: (context, index) {
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            color: ConstColor.baseColor,
-          ),
+    return BlocBuilder<ControllerApp, NaVconState>(
+      builder: (context, state) {
+        return SpinKitThreeInOut(
+          size: 35,
+          itemBuilder: (context, index) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                color: state.status is Araghi
+                    ? ConstColor.baseColor
+                    : ColorNakhil.item,
+              ),
+            );
+          },
         );
       },
     );
   }
 
   static Widget fadingCircle(BuildContext context) {
-    return SpinKitFadingCircle(
-      size: 35,
-      itemBuilder: (context, index) {
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            color: ConstColor.baseColor,
-          ),
+    return BlocBuilder<ControllerApp, NaVconState>(
+      builder: (context, state) {
+        return SpinKitFadingCircle(
+          size: 35,
+          itemBuilder: (context, index) {
+            return DecoratedBox(
+              decoration: BoxDecoration(
+                color: state.status is Araghi
+                    ? ConstColor.baseColor
+                    : ColorNakhil.item,
+              ),
+            );
+          },
         );
       },
     );

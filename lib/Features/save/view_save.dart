@@ -22,7 +22,7 @@ class SaveNews extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         drawer: CostumDrawer.customDrawer(context),
-        bottomNavigationBar: NavBarCommon.navigation(),
+        bottomNavigationBar: NavBarCommon.navigation(context),
         appBar: CommonAppbar.appBar(context,
             textEditingController: textEditingController),
         body: GetBuilder<SearchControllerMain>(

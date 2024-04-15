@@ -10,6 +10,7 @@ import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
 import 'package:nakhil/Core/services/fetchSearch/cubit/search_cubit.dart';
 import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
 import 'package:nakhil/Core/services/news_cubit/slider-bloc/slider_p_cubit.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Features/Splash/view/splashMain.dart';
 import 'package:nakhil/Features/home/cubit/nav_cubit.dart';
 import 'package:nakhil/Features/home/widgets/cubit/select_category_cubit.dart';
@@ -25,8 +26,11 @@ void main() async {
 
   box = await Hive.openBox<ItemDatabase>("saveitem");
   iconSave = await Hive.openBox("saveicon");
-
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+    (value) {
+      runApp(const MyApp());
+    },
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -63,22 +67,30 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => SettingsCubit(),
         ),
+        BlocProvider(
+          create: (context) => ControllerApp(),
+        ),
         //     BlocProvider(
-        //   create: (context) => SettingsCubit(),
+        //   create: (context) => NaVconCubit(),
         // ),
       ],
-      child: GetMaterialApp(
-        initialRoute: "/",
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          fontFamily: FontFamily.bloom,
-          primaryColor: ConstColor.baseColor,
-          colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.deepPurple,
-          ),
-          useMaterial3: true,
-        ),
-        home: const SplashMain(),
+      child: BlocBuilder<ControllerApp, NaVconState>(
+        builder: (context, state) {
+          return GetMaterialApp(
+            initialRoute: "/",
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              fontFamily: FontFamily.bloom,
+              primaryColor: ConstColor.baseColor,
+              appBarTheme: AppBarTheme(backgroundColor: state.color),
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: Colors.deepPurple,
+              ),
+              useMaterial3: true,
+            ),
+            home: const SplashMain(),
+          );
+        },
       ),
     );
   }

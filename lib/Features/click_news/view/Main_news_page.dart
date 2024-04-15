@@ -15,6 +15,7 @@ import 'package:nakhil/Core/widgets/costum_drawer.dart';
 import 'package:nakhil/Core/widgets/coustom-appbar.dart';
 import 'package:nakhil/Core/widgets/navbar.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:nakhil/Features/settings/cubit/settings_cubit.dart';
 import 'package:nakhil/main.dart';
 import 'package:share/share.dart';
 
@@ -36,6 +37,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     iconSelect = iconSave.get("iconSelect${widget.id}") ?? false;
     BlocProvider.of<ContentCubit>(context).fetchData(
+      context: context,
       id: widget.id,
     );
     super.initState();
@@ -55,7 +57,7 @@ class _MainPageState extends State<MainPage> {
         appBar: CommonAppbar.appBar(context,
             isCickMode: true, textEditingController: textEditingController),
         drawer: CostumDrawer.customDrawer(context),
-        bottomNavigationBar: NavBarCommon.navigation(),
+        bottomNavigationBar: NavBarCommon.navigation(context),
         body: BlocBuilder<ContentCubit, ContentState>(
           builder: (context, state) {
             if (state.status is ClickLoading) {
@@ -79,10 +81,15 @@ class _MainPageState extends State<MainPage> {
                           bottomRight: Radius.circular(60)),
                       child: CachedNetworkImage(
                         imageUrl:
-                            "${COnstMethod.baseImageUrlHight}${data.post![0].img}",
+                            "${COnstMethod().baseImageUrlHight(context: context)}${data.post![0].img}",
                         fit: BoxFit.cover,
                         width: EsaySize.width(context),
                         height: EsaySize.height(context) / 3.5,
+                        errorWidget: (context, url, error) {
+                          return const Center(
+                            child: Icon(Icons.error),
+                          );
+                        },
                         placeholder: (context, url) {
                           return Center(
                             child: CostumLoading.fadingCircle(context),
@@ -94,18 +101,27 @@ class _MainPageState extends State<MainPage> {
                         id: data.post![0].id!,
                         title: data.post![0].title!,
                         time: data.post![0].dateTime!,
-                        category: data.post![0].categoryId!.categoryCheker(),
+                        category:
+                            data.post![0].categoryId!.categoryCheker(context),
                         img:
-                            "${COnstMethod.baseImageUrlHight}${data.post![0].img}",
+                            "${COnstMethod().baseImageUrlHight(context: context)}${data.post![0].img}",
                         isArtMode: Art.isAretMode),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 12, vertical: 8),
-                      child: HtmlWidget('''
-  <div style="text-align: justify;">
-    $content
-  </div>
-  '''),
+                      child: BlocBuilder<SettingsCubit, SettingsState>(
+                        builder: (context, state) {
+                          return HtmlWidget(
+                            '''
+                        <div style="text-align: justify;">
+                          $content
+                        </div>
+                        ''',
+                            textStyle: TextStyle(
+                                fontSize: state.fontsizeContent.toDouble()),
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -134,11 +150,17 @@ class _MainPageState extends State<MainPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  maxLines: 3,
-                  title,
-                  style: const TextStyle(
-                      fontSize: 18, fontWeight: FontWeight.bold),
+                BlocBuilder<SettingsCubit, SettingsState>(
+                  builder: (context, state) {
+                    return Text(
+                      maxLines: 3,
+                      title,
+                      style: TextStyle(
+                          fontSize: state.fontsizeTitle.toDouble(),
+                          fontWeight: FontWeight.bold,
+                          color: Color(state.titleColor)),
+                    );
+                  },
                 ),
                 EsaySize.gap(8),
                 Container(

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/const/const_method.dart';
 import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
 import 'package:nakhil/Core/services/fetchSearch/cubit/search_cubit.dart';
 import 'package:nakhil/Core/services/fetchSearch/cubit/status.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/utils/format_date.dart';
 import 'package:nakhil/Core/utils/loading.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Features/Search/model/model_save_value_search.dart';
 import 'package:nakhil/Features/home/widgets/news/news-item.dart';
 
@@ -75,12 +75,16 @@ class _ViewSearchState extends State<ViewSearch> {
                       controller: scrollController,
                       itemCount: data.length,
                       itemBuilder: (context, index) {
-                        return NewsItem(
-                          id: data[index].id!,
-                          time: FormatData.result(data[index].dateTime!),
-                          title: data[index].title!,
-                          path:
-                              "${COnstMethod.baseImageUrlLow}${data[index].img}",
+                        return BlocBuilder<ControllerApp, NaVconState>(
+                          builder: (context, state) {
+                            return NewsItem(
+                              id: data[index].id!,
+                              time: FormatData.result(data[index].dateTime!),
+                              title: data[index].title!,
+                              path:
+                                  "${state.status is Nnews ? "https://palms-news.com/upload_list/thumbs/" : "https://iraqpalm.com/upload_list/thumbs/"}${data[index].img}",
+                            );
+                          },
                         );
                       },
                     )),

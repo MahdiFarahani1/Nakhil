@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/extensions/layout_ex.dart';
 import 'package:nakhil/Core/gen/assets.gen.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Features/articles/view_art.dart';
 import 'package:nakhil/Features/home/view/articles.dart';
 import 'package:nakhil/Features/home/view/nakhil_home.dart';
@@ -106,7 +108,10 @@ class CostumDrawer {
               ),
               ElevatedButton(
                 onPressed: () {
-                  AboutRepository.launchUrl(AboutRepository.urlSite);
+                  bloc.BlocProvider.of<ControllerApp>(context).state.status
+                          is Araghi
+                      ? AboutRepository.launchUrl(AboutRepository.urlSiteAraghi)
+                      : AboutRepository.launchUrl(AboutRepository.urlSiteNews);
                 },
                 style: styleBtn(),
                 child: FittedBox(

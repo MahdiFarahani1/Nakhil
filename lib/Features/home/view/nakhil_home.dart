@@ -14,6 +14,7 @@ import 'package:nakhil/Core/utils/format_date.dart';
 import 'package:nakhil/Core/utils/loading.dart';
 import 'package:nakhil/Core/widgets/costum_drawer.dart';
 import 'package:nakhil/Core/widgets/coustom-appbar.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Core/widgets/navbar.dart';
 import 'package:nakhil/Features/Search/controller/search_controller.dart';
 import 'package:nakhil/Features/Search/view/view-search.dart';
@@ -39,11 +40,9 @@ class _NakhilHomeState extends State<NakhilHome> {
   @override
   void initState() {
     Art.isAretMode = false;
-    BlocProvider.of<NewsCubit>(context).fetchData(
-        start: 0,
-        limit: 20,
-        catId: BlocProvider.of<SelectCategoryCubit>(context).state.catId);
-
+    BlocProvider.of<NewsCubit>(context)
+        .fetchData(context: context, start: 0, limit: 20, catId: 0);
+    BlocProvider.of<SelectCategoryCubit>(context).initState(context);
     scrollController = ScrollController()..addListener(_scrollListener);
     super.initState();
   }
@@ -57,7 +56,7 @@ class _NakhilHomeState extends State<NakhilHome> {
 
   void _scrollListener() {
     BlocProvider.of<NewsCubit>(context).loadMore(scrollController,
-        BlocProvider.of<SelectCategoryCubit>(context).state.catId);
+        BlocProvider.of<SelectCategoryCubit>(context).state.catId, context);
   }
 
   @override
@@ -68,7 +67,7 @@ class _NakhilHomeState extends State<NakhilHome> {
         appBar: CommonAppbar.appBar(context,
             textEditingController: textEditingController),
         drawer: CostumDrawer.customDrawer(context),
-        bottomNavigationBar: NavBarCommon.navigation(),
+        bottomNavigationBar: NavBarCommon.navigation(context),
         body: GetBuilder<SearchControllerMain>(
           init: SearchControllerMain(),
           initState: (_) {},
@@ -120,7 +119,7 @@ class _NakhilHomeState extends State<NakhilHome> {
                         time: FormatData.result(data[index].dateTime!),
                         title: data[index].title!,
                         path:
-                            "${COnstMethod.baseImageUrlLow}${data[index].img!}",
+                            "${BlocProvider.of<ControllerApp>(context).state.status is Nnews ? "https://palms-news.com/upload_list/thumbs/" : "https://iraqpalm.com/upload_list/thumbs/"}${data[index].img!}",
                       );
                     },
                     itemCount: data?.length,
@@ -188,11 +187,16 @@ class _NakhilHomeState extends State<NakhilHome> {
                                 width: EsaySize.width(context),
                                 height: EsaySize.height(context) / 4,
                                 fit: BoxFit.cover,
+                                errorWidget: (context, url, error) {
+                                  return const Center(
+                                    child: Icon(Icons.error),
+                                  );
+                                },
                                 placeholder: (context, url) {
                                   return CostumLoading.loadCircle(context);
                                 },
                                 imageUrl:
-                                    "${COnstMethod.baseImageUrlHight}${data[apiIndex].img!}"),
+                                    "${COnstMethod().baseImageUrlHight(context: context)}${data[apiIndex].img!}"),
                           ),
                         ),
                         Align(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/extensions/layout_ex.dart';
+import 'package:nakhil/Core/gen/fonts.gen.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/utils/loading.dart';
 import 'package:nakhil/Features/click_news/view/Main_news_page.dart';
@@ -48,6 +49,11 @@ class NewsItem extends StatelessWidget {
                   child: CachedNetworkImage(
                     imageUrl: path,
                     fit: BoxFit.cover,
+                    errorWidget: (context, url, error) {
+                      return const Center(
+                        child: Icon(Icons.error),
+                      );
+                    },
                     placeholder: (context, url) {
                       return Center(
                         child: CostumLoading.loadCircle(context),
@@ -66,7 +72,9 @@ class NewsItem extends StatelessWidget {
                   maxLines: 3,
                   textAlign: TextAlign.justify,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 15),
+                    fontSize: 16.5,
+                    fontFamily: FontFamily.neue,
+                  ),
                 ),
               ),
             ),

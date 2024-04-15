@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Features/info/repository/aboutus_repository.dart';
 
 class Btn {
@@ -10,17 +12,23 @@ class Btn {
       {required IconData iconData, required VoidCallback onPress}) {
     return GestureDetector(
       onTap: onPress,
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(
-            color: ConstColor.menuColor,
-            borderRadius: BorderRadius.circular(4)),
-        child: Icon(
-          iconData,
-          size: 20,
-          color: Colors.white,
-        ),
+      child: BlocBuilder<ControllerApp, NaVconState>(
+        builder: (context, state) {
+          return Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+                color: state.status is Araghi
+                    ? ConstColor.baseColor
+                    : ColorNakhil.item,
+                borderRadius: BorderRadius.circular(4)),
+            child: Icon(
+              iconData,
+              size: 20,
+              color: Colors.white,
+            ),
+          );
+        },
       ),
     );
   }
@@ -45,12 +53,14 @@ class Btn {
     );
   }
 
-  static List<Widget> allbtn() {
+  static List<Widget> allbtn(BuildContext context) {
     return [
       Btn.btnSocial(
         iconData: FontAwesomeIcons.earthAmericas,
         onPress: () {
-          AboutRepository.launchUrl(AboutRepository.urlSite);
+          BlocProvider.of<ControllerApp>(context).state.status is Araghi
+              ? AboutRepository.launchUrl(AboutRepository.urlSiteAraghi)
+              : AboutRepository.launchUrl(AboutRepository.urlSiteNews);
         },
       ),
       EsaySize.gap(10),

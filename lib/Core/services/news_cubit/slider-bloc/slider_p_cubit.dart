@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:nakhil/Core/services/provider_all.dart';
 
 part 'slider_p_state.dart';
@@ -6,9 +7,9 @@ part 'slider_p_state.dart';
 class SliderPCubit extends Cubit<SliderPState> {
   SliderPCubit() : super(SliderPState(status: LoadingSlider()));
 
-  fetchArtSlider() async {
+  fetchArtSlider(BuildContext context) async {
     emit(SliderPState(status: LoadingSlider()));
-    var res = await ProviderAll().fetchArtData();
+    var res = await ProviderAll().fetchArtData(context: context);
     if (res.statusCode == 200) {
       var data = res.data["sliders"];
 

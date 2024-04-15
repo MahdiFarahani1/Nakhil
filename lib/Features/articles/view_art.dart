@@ -16,6 +16,7 @@ import 'package:nakhil/Core/utils/format_date.dart';
 import 'package:nakhil/Core/utils/loading.dart';
 import 'package:nakhil/Core/widgets/costum_drawer.dart';
 import 'package:nakhil/Core/widgets/coustom-appbar.dart';
+import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Core/widgets/navbar.dart';
 import 'package:nakhil/Features/Search/controller/search_controller.dart';
 import 'package:nakhil/Features/Search/view/view-search.dart';
@@ -36,9 +37,9 @@ class _ViewArtState extends State<ViewArt> {
   @override
   void initState() {
     Art.isAretMode = true;
-    BlocProvider.of<NewsCubit>(context)
-        .fetchData(start: 0, limit: 20, catId: 0, isArt: true);
-    BlocProvider.of<SliderPCubit>(context).fetchArtSlider();
+    BlocProvider.of<NewsCubit>(context).fetchData(
+        start: 0, limit: 20, catId: 0, isArt: true, context: context);
+    BlocProvider.of<SliderPCubit>(context).fetchArtSlider(context);
 
     super.initState();
   }
@@ -53,7 +54,7 @@ class _ViewArtState extends State<ViewArt> {
         drawer: CostumDrawer.customDrawer(context),
         appBar: CommonAppbar.appBar(context,
             textEditingController: textEditingController),
-        bottomNavigationBar: NavBarCommon.navigation(),
+        bottomNavigationBar: NavBarCommon.navigation(context),
         body: GetBuilder<SearchControllerMain>(
           init: SearchControllerMain(),
           initState: (_) {},
@@ -122,11 +123,16 @@ class _ViewArtState extends State<ViewArt> {
                                 width: EsaySize.width(context),
                                 height: EsaySize.height(context) / 4,
                                 fit: BoxFit.cover,
+                                errorWidget: (context, url, error) {
+                                  return const Center(
+                                    child: Icon(Icons.error),
+                                  );
+                                },
                                 placeholder: (context, url) {
                                   return CostumLoading.loadCircle(context);
                                 },
                                 imageUrl:
-                                    "${COnstMethod.baseImageUrlHight}${stateNews.sliderData?[index]["img"]}"),
+                                    "${COnstMethod().baseImageUrlHight(context: context)}${stateNews.sliderData?[index]["img"]}"),
                           ),
                         ),
                         Align(
@@ -246,7 +252,7 @@ class _ViewArtState extends State<ViewArt> {
                         time: FormatData.result(data[index].dateTime!),
                         title: data[index].title!,
                         path:
-                            "${COnstMethod.baseImageUrlLow}${data[index].img!}",
+                            "${BlocProvider.of<ControllerApp>(context).state.status is Nnews ? "https://palms-news.com/upload_list/thumbs/" : "https://iraqpalm.com/upload_list/thumbs/"}${data[index].img!}",
                       );
                     },
                     itemCount: data?.length,

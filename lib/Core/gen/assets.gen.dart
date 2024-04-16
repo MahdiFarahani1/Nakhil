@@ -39,9 +39,6 @@ class $AssetsImagesGen {
   /// File path: assets/images/save-1.png
   AssetGenImage get save1 => const AssetGenImage('assets/images/save-1.png');
 
-  /// File path: assets/images/save.png
-  AssetGenImage get save => const AssetGenImage('assets/images/save.png');
-
   /// File path: assets/images/saves.png
   AssetGenImage get saves => const AssetGenImage('assets/images/saves.png');
 
@@ -65,7 +62,6 @@ class $AssetsImagesGen {
         menu,
         nnews,
         save1,
-        save,
         saves,
         search,
         settings,

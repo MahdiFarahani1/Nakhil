@@ -157,7 +157,7 @@ class _MainPageState extends State<MainPage> {
                       title,
                       style: TextStyle(
                           fontSize: state.fontsizeTitle.toDouble(),
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w600,
                           color: Color(state.titleColor)),
                     );
                   },

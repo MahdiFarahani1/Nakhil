@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:nakhil/Core/gen/fonts.gen.dart';
 import 'package:nakhil/main.dart';
 
 part 'settings_state.dart';
@@ -29,5 +30,9 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   changeTitleColor(int color) {
     emit(state.copyWith(titleColor: color));
+  }
+
+  changeFontFamily(String font) {
+    emit(state.copyWith(fontFamily: font));
   }
 }

@@ -39,11 +39,11 @@ class ProviderAll {
   }
 
   Future<Response<dynamic>> fetchArtData(
-      {required BuildContext context}) async {
+      {required BuildContext context, required int start}) async {
     var res = await Dio().post(
         BlocProvider.of<ControllerApp>(context).state.status is Nnews
             ? "https://palms-news.com/api/article"
-            : "https://www.iraqpalm.com/api/article");
+            : "https://www.iraqpalm.com/api/article?start=$start&limit=20");
     return res;
   }
 }

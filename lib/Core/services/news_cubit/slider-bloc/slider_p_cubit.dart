@@ -9,7 +9,7 @@ class SliderPCubit extends Cubit<SliderPState> {
 
   fetchArtSlider(BuildContext context) async {
     emit(SliderPState(status: LoadingSlider()));
-    var res = await ProviderAll().fetchArtData(context: context);
+    var res = await ProviderAll().fetchArtData(context: context, start: 0);
     if (res.statusCode == 200) {
       var data = res.data["sliders"];
 

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/extensions/layout_ex.dart';
-import 'package:nakhil/Core/gen/fonts.gen.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/utils/loading.dart';
 import 'package:nakhil/Features/click_news/view/Main_news_page.dart';
@@ -73,7 +72,6 @@ class NewsItem extends StatelessWidget {
                   textAlign: TextAlign.justify,
                   style: const TextStyle(
                     fontSize: 16.5,
-                    fontFamily: FontFamily.neue,
                   ),
                 ),
               ),

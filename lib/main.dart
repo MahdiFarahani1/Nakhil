@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/dataBase/model.dart';
-import 'package:nakhil/Core/gen/fonts.gen.dart';
 import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
 import 'package:nakhil/Core/services/fetchSearch/cubit/search_cubit.dart';
 import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
@@ -76,19 +75,23 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<ControllerApp, NaVconState>(
         builder: (context, state) {
-          return GetMaterialApp(
-            initialRoute: "/",
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              fontFamily: FontFamily.bloom,
-              primaryColor: ConstColor.baseColor,
-              appBarTheme: AppBarTheme(backgroundColor: state.color),
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: Colors.deepPurple,
-              ),
-              useMaterial3: true,
-            ),
-            home: const SplashMain(),
+          return BlocBuilder<SettingsCubit, SettingsState>(
+            builder: (context, state2) {
+              return GetMaterialApp(
+                initialRoute: "/",
+                debugShowCheckedModeBanner: false,
+                theme: ThemeData(
+                  fontFamily: state2.fontFamily,
+                  primaryColor: ConstColor.baseColor,
+                  appBarTheme: AppBarTheme(backgroundColor: state.color),
+                  colorScheme: ColorScheme.fromSeed(
+                    seedColor: Colors.deepPurple,
+                  ),
+                  useMaterial3: true,
+                ),
+                home: const SplashMain(),
+              );
+            },
           );
         },
       ),

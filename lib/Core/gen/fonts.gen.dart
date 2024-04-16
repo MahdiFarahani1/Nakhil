@@ -10,9 +10,12 @@
 class FontFamily {
   FontFamily._();
 
-  /// Font family: bloom
-  static const String bloom = 'bloom';
+  /// Font family: Arabic
+  static const String arabic = 'Arabic';
 
-  /// Font family: neue
-  static const String neue = 'neue';
+  /// Font family: Salamat
+  static const String salamat = 'Salamat';
+
+  /// Font family: Vazir
+  static const String vazir = 'Vazir';
 }

@@ -95,14 +95,22 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-    - family: bloom
+    - family: Salamat
       fonts:
-        - asset: assets/fonts/BloombergArabicBetav4-Bold.ttf
+        - asset: assets/fonts/Salamat.ttf
     #       - asset: fonts/Schyler-Italic.ttf
     #         style: italic
-    - family: neue
+    - family: Arabic
       fonts:
-        - asset: assets/fonts/NeueHaasGroteskBloomberg.ttf
+        - asset: assets/fonts/AGCRegular.ttf
+        - asset: assets/fonts/AGCBold.ttf
+          weight: 600
+
+    - family: Vazir
+      fonts:
+        - asset: assets/fonts/Al-Jazeera-Arabic-Regular.ttf
+        - asset: assets/fonts/Al-Jazeera-Arabic-Bold.ttf
+          weight: 600
 
   #
   # For details regarding fonts from package dependencies,

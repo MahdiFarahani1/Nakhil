@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:nakhil/Core/const/const_method.dart';
 import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
 import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
 import 'package:nakhil/Core/services/news_cubit/cubit/status.dart';
@@ -114,7 +115,7 @@ class _ArticlesState extends State<Articles> {
                                                 data[index].dateTime!),
                                             title: data[index].title!,
                                             path:
-                                                "${BlocProvider.of<ControllerApp>(context).state is Nnews ? "https://palms-news.com/upload_list/thumbs/" : "https://iraqpalm.com/upload_list/thumbs/"}${data[index].img}",
+                                                "${COnstMethod().baseImageUrlLow(context: context)}${data[index].img}",
                                           );
                                         },
                                         itemCount: data?.length,

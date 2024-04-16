@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/gen/fonts.gen.dart';
 import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
 import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Features/home/widgets/cubit/select_category_cubit.dart';
@@ -47,7 +46,6 @@ class CatItem extends StatelessWidget {
             child: Text(
               mapCat.values.elementAt(index),
               style: TextStyle(
-                  fontFamily: FontFamily.neue,
                   color: boolList[index]
                       ? Colors.white
                       : (state.status is Araghi

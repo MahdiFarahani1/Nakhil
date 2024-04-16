@@ -31,11 +31,14 @@ class CommonAppbar {
                                 ? const Text(
                                     "نخيل عراقي",
                                     style: TextStyle(
-                                        color: Colors.white, fontSize: 18.5),
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white,
+                                        fontSize: 18.5),
                                   )
                                 : Text(
                                     "نخيل نيوز",
                                     style: TextStyle(
+                                        fontWeight: FontWeight.w600,
                                         color: ColorNakhil.item,
                                         fontSize: 18.5),
                                   );

@@ -26,7 +26,7 @@ import 'package:nakhil/Features/home/widgets/news/news-item.dart';
 
 // ignore: must_be_immutable
 class ViewArt extends StatefulWidget {
-  ViewArt({super.key});
+  const ViewArt({super.key});
 
   @override
   State<ViewArt> createState() => _ViewArtState();
@@ -34,14 +34,28 @@ class ViewArt extends StatefulWidget {
 
 class _ViewArtState extends State<ViewArt> {
   final CarouselController controller = CarouselController();
+  ScrollController scrollController = ScrollController();
   @override
   void initState() {
     Art.isAretMode = true;
     BlocProvider.of<NewsCubit>(context).fetchData(
         start: 0, limit: 20, catId: 0, isArt: true, context: context);
     BlocProvider.of<SliderPCubit>(context).fetchArtSlider(context);
+    scrollController = ScrollController()..addListener(_scrollListener);
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    BlocProvider.of<NewsCubit>(context)
+        .loadMore(scrollController, 0, context, isArt: true);
   }
 
   final TextEditingController textEditingController = TextEditingController();
@@ -245,7 +259,7 @@ class _ViewArtState extends State<ViewArt> {
                   width: double.infinity,
                   child: ListView.builder(
                     shrinkWrap: true,
-                    //    controller: scrollController,
+                    controller: scrollController,
                     itemBuilder: (context, index) {
                       return NewsItem(
                         id: data![index].id!,

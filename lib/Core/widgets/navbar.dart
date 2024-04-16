@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 import 'package:get/get.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/gen/assets.gen.dart';
-import 'package:nakhil/Core/gen/fonts.gen.dart';
 import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:nakhil/Features/home/controller/nav_index.dart';
 import 'package:nakhil/Features/home/view/nakhil_home.dart';
@@ -69,15 +68,15 @@ class NavBarCommon {
                           return const Text(
                             "نخيل نيوز",
                             style: TextStyle(
-                                color: Colors.white,
-                                fontFamily: FontFamily.neue),
+                              color: Colors.white,
+                            ),
                           );
                         }
                         return Text(
                           "نخيل عراقي",
                           style: TextStyle(
-                              color: ColorNakhil.item,
-                              fontFamily: FontFamily.neue),
+                            color: ColorNakhil.item,
+                          ),
                         );
                       },
                     )),
@@ -138,9 +137,7 @@ class NavBarCommon {
   }
 
   static TextStyle textStyle() {
-    return const TextStyle(
-      fontFamily: FontFamily.neue,
-    );
+    return const TextStyle();
   }
 
   static Widget navItem(Widget path, int index, int selectIndex) {

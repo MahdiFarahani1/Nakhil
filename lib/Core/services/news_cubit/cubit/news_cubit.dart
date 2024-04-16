@@ -24,7 +24,7 @@ class NewsCubit extends Cubit<NewsState> {
               categoryid: catId,
               start: start,
             )
-          : await ProviderAll().fetchArtData(context: context);
+          : await ProviderAll().fetchArtData(context: context, start: start);
 
       if (response.statusCode == 200) {
         List<dynamic> newsList = response.data['posts'];
@@ -41,7 +41,8 @@ class NewsCubit extends Cubit<NewsState> {
     }
   }
 
-  loadMore(ScrollController controller, int catid, BuildContext context) async {
+  loadMore(ScrollController controller, int catid, BuildContext context,
+      {bool isArt = false}) async {
     if (state.hasNextPage == true &&
         state.isLoadMoreRunning == false &&
         controller.position.extentAfter < 300) {
@@ -50,8 +51,11 @@ class NewsCubit extends Cubit<NewsState> {
       state.loadMoreCount += numberCat;
 
       try {
-        var response = await ProviderAll().fetchAllData(
-            start: state.loadMoreCount, categoryid: catid, context: context);
+        var response = !isArt
+            ? await ProviderAll().fetchAllData(
+                start: state.loadMoreCount, categoryid: catid, context: context)
+            : await ProviderAll()
+                .fetchArtData(context: context, start: state.loadMoreCount);
 
         if (response.statusCode == 200) {
           List<dynamic> newsList = response.data['posts'];

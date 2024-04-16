@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nakhil/Core/const/const_color.dart';
+import 'package:nakhil/Core/const/const_method.dart';
 import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
 import 'package:nakhil/Core/services/fetchSearch/cubit/search_cubit.dart';
 import 'package:nakhil/Core/services/fetchSearch/cubit/status.dart';
@@ -82,7 +83,7 @@ class _ViewSearchState extends State<ViewSearch> {
                               time: FormatData.result(data[index].dateTime!),
                               title: data[index].title!,
                               path:
-                                  "${state.status is Nnews ? "https://palms-news.com/upload_list/thumbs/" : "https://iraqpalm.com/upload_list/thumbs/"}${data[index].img}",
+                                  "${COnstMethod().baseImageUrlLow(context: context)}${data[index].img}",
                             );
                           },
                         );

@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 import 'package:nakhil/Core/const/const_color.dart';
 import 'package:nakhil/Core/extensions/widget_ex.dart';
+import 'package:nakhil/Core/gen/fonts.gen.dart';
 import 'package:nakhil/Core/utils/esay_size.dart';
 import 'package:nakhil/Core/widgets/costum_drawer.dart';
 
@@ -15,6 +16,9 @@ import 'package:nakhil/Features/settings/cubit/settings_cubit.dart';
 import 'package:nakhil/main.dart';
 
 class Settings extends StatelessWidget {
+  double fontfamilyNumber = 1;
+  String fontFamilyWord = FontFamily.vazir;
+
   final TextEditingController textEditingController = TextEditingController();
   final List<int> colorsList = [
     Colors.red.value,
@@ -70,42 +74,66 @@ class Settings extends StatelessWidget {
   }
 
   Container fontFamily(BuildContext context) {
-    return costumContainer(
-        context,
-        Column(
-          children: [
-            EsaySize.gap(10),
-            const Icon(
-              FontAwesomeIcons.font,
-              size: 30,
-              color: Colors.black,
-            ),
-            Directionality(
-              textDirection: TextDirection.ltr,
-              child: SliderTheme(
-                data: const SliderThemeData(
-                  activeTrackColor: Colors.black,
-                  trackHeight: 1,
-                  inactiveTrackColor: Color.fromRGBO(158, 158, 158, 1),
-                  thumbColor: Colors.black,
-                  inactiveTickMarkColor: Colors.grey,
-                  activeTickMarkColor: Colors.transparent,
-                ),
-                child: Slider(
-                  divisions: 3,
-                  value: 1,
-                  min: 1,
-                  max: 3,
-                  onChanged: (value) {},
-                ),
+    return costumContainer(context,
+        StatefulBuilder(builder: (context, setState) {
+      return Column(
+        children: [
+          EsaySize.gap(10),
+          const Icon(
+            FontAwesomeIcons.font,
+            size: 30,
+            color: Colors.black,
+          ),
+          Directionality(
+            textDirection: TextDirection.ltr,
+            child: SliderTheme(
+              data: const SliderThemeData(
+                activeTrackColor: Colors.black,
+                trackHeight: 1,
+                inactiveTrackColor: Color.fromRGBO(158, 158, 158, 1),
+                thumbColor: Colors.black,
+                inactiveTickMarkColor: Colors.grey,
+                activeTickMarkColor: Colors.transparent,
+              ),
+              child: Slider(
+                divisions: 2,
+                value: fontfamilyNumber,
+                min: 0,
+                max: 2,
+                onChanged: (value) {
+                  setState(
+                    () {
+                      switch (value) {
+                        case 0:
+                          fontFamilyWord = FontFamily.arabic;
+                          break;
+                        case 1:
+                          fontFamilyWord = FontFamily.vazir;
+                          break;
+                        case 2:
+                          fontFamilyWord = FontFamily.salamat;
+                          break;
+                        default:
+                      }
+                      BlocProvider.of<SettingsCubit>(context)
+                          .changeFontFamily(fontFamilyWord);
+                      fontfamilyNumber = value;
+                    },
+                  );
+                },
               ),
             ),
-            Expanded(
-              child: "بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ".readyText(
-                  style: const TextStyle(color: Colors.black, fontSize: 15)),
-            )
-          ],
-        ));
+          ),
+          Expanded(
+            child: "بِسْمِ اللَّـهِ الرَّحْمَـٰنِ الرَّحِيمِ".readyText(
+                style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontFamily: fontFamilyWord)),
+          )
+        ],
+      );
+    }));
   }
 
   Widget fontsizeTitle(BuildContext context) {

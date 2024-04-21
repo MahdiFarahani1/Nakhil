@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:nakhil/Core/services/fetchContentApi/model/content_model.dart';
-import 'package:nakhil/Core/services/provider_all.dart';
+import 'package:flutter_application_1/Core/services/fetchContentApi/model/content_model.dart';
+import 'package:flutter_application_1/Core/services/provider_all.dart';
 
 part 'content_state.dart';
 

@@ -1,22 +1,26 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/const/const_method.dart';
+import 'package:flutter_application_1/Core/dataBase/model.dart';
+import 'package:flutter_application_1/Core/extensions/variyable_ex.dart';
+import 'package:flutter_application_1/Core/gen/assets.gen.dart';
+import 'package:flutter_application_1/Core/services/fetchContentApi/cubit/content_cubit.dart';
+import 'package:flutter_application_1/Core/services/fetchContentApi/model/content_model.dart';
+import 'package:flutter_application_1/Core/utils/esay_size.dart';
+import 'package:flutter_application_1/Core/utils/format_date.dart';
+import 'package:flutter_application_1/Core/utils/loading.dart';
+import 'package:flutter_application_1/Core/widgets/costum_drawer.dart';
+import 'package:flutter_application_1/Core/widgets/coustom-appbar.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
+import 'package:flutter_application_1/Core/widgets/navbar.dart';
+import 'package:flutter_application_1/Features/save/cubit/save_news_cubit.dart';
+import 'package:flutter_application_1/Features/settings/cubit/settings_cubit.dart';
+import 'package:flutter_application_1/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/const/const_method.dart';
-import 'package:nakhil/Core/dataBase/model.dart';
-import 'package:nakhil/Core/extensions/variyable_ex.dart';
-import 'package:nakhil/Core/gen/assets.gen.dart';
-import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
-import 'package:nakhil/Core/services/fetchContentApi/model/content_model.dart';
-import 'package:nakhil/Core/utils/esay_size.dart';
-import 'package:nakhil/Core/utils/format_date.dart';
-import 'package:nakhil/Core/utils/loading.dart';
-import 'package:nakhil/Core/widgets/costum_drawer.dart';
-import 'package:nakhil/Core/widgets/coustom-appbar.dart';
-import 'package:nakhil/Core/widgets/navbar.dart';
+
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
-import 'package:nakhil/Features/settings/cubit/settings_cubit.dart';
-import 'package:nakhil/main.dart';
+
 import 'package:share/share.dart';
 
 // ignore: must_be_immutable
@@ -195,8 +199,16 @@ class _MainPageState extends State<MainPage> {
               GestureDetector(
                 onTap: () {
                   isArtMode
-                      ? Share.share("https://palms-news.com/a$id")
-                      : Share.share("https://palms-news.com/n$id");
+                      ? Share.share(BlocProvider.of<ControllerApp>(context)
+                              .state
+                              .status is Nnews
+                          ? "https://palms-news.com/a$id"
+                          : "https://www.iraqpalm.com/ar/a$id")
+                      : Share.share(BlocProvider.of<ControllerApp>(context)
+                              .state
+                              .status is Nnews
+                          ? "https://palms-news.com/n$id"
+                          : "https://www.iraqpalm.com/ar/n$id");
                 },
                 child: Container(
                   width: 32,
@@ -238,7 +250,15 @@ class _MainPageState extends State<MainPage> {
                       );
 
                       var model = ItemDatabase(
-                          img: img, time: time, title: title, id: id);
+                          img: img,
+                          time: time,
+                          title: title,
+                          id: id,
+                          tag: BlocProvider.of<ControllerApp>(context)
+                                  .state
+                                  .status is Araghi
+                              ? "a"
+                              : "n");
 
                       bool exists =
                           box.values.any((element) => element.id == model.id);
@@ -257,6 +277,7 @@ class _MainPageState extends State<MainPage> {
                           }
                         }
                       }
+                      BlocProvider.of<SaveNewsCubit>(context).loadSave(context);
                     },
                     child: Container(
                       width: 32,

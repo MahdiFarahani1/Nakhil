@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/dataBase/model.dart';
+import 'package:flutter_application_1/Core/firebase/firebase_setup.dart';
+import 'package:flutter_application_1/Core/services/fetchContentApi/cubit/content_cubit.dart';
+import 'package:flutter_application_1/Core/services/fetchSearch/cubit/search_cubit.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/cubit/news_cubit.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/slider-bloc/slider_p_cubit.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
+import 'package:flutter_application_1/Features/Splash/view/splashMain.dart';
+import 'package:flutter_application_1/Features/home/cubit/nav_cubit.dart';
+import 'package:flutter_application_1/Features/home/widgets/cubit/select_category_cubit.dart';
+import 'package:flutter_application_1/Features/save/cubit/save_news_cubit.dart';
+import 'package:flutter_application_1/Features/settings/cubit/settings_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/dataBase/model.dart';
-import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
-import 'package:nakhil/Core/services/fetchSearch/cubit/search_cubit.dart';
-import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
-import 'package:nakhil/Core/services/news_cubit/slider-bloc/slider_p_cubit.dart';
-import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
-import 'package:nakhil/Features/Splash/view/splashMain.dart';
-import 'package:nakhil/Features/home/cubit/nav_cubit.dart';
-import 'package:nakhil/Features/home/widgets/cubit/select_category_cubit.dart';
-import 'package:nakhil/Features/save/cubit/save_news_cubit.dart';
-import 'package:nakhil/Features/settings/cubit/settings_cubit.dart';
 
 late Box box;
 late Box iconSave;
@@ -25,6 +26,7 @@ void main() async {
 
   box = await Hive.openBox<ItemDatabase>("saveitem");
   iconSave = await Hive.openBox("saveicon");
+  await setUpFirebase();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
     (value) {
       runApp(const MyApp());

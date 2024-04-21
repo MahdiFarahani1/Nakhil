@@ -13,7 +13,7 @@ class ContentModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (post != null) {
       data['post'] = post!.map((v) => v.toJson()).toList();
     }
@@ -50,14 +50,14 @@ class Post {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['category_id'] = this.categoryId;
-    data['title'] = this.title;
-    data['img'] = this.img;
-    data['date_time'] = this.dateTime;
-    data['content'] = this.content;
-    data['slug'] = this.slug;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['category_id'] = categoryId;
+    data['title'] = title;
+    data['img'] = img;
+    data['date_time'] = dateTime;
+    data['content'] = content;
+    data['slug'] = slug;
     return data;
   }
 }

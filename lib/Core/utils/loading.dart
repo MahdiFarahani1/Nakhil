@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 
 class CostumLoading {
   static Widget loadCircle(BuildContext context) {

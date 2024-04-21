@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/gen/assets.gen.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/cubit/news_cubit.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
+import 'package:flutter_application_1/Features/home/controller/nav_index.dart';
+import 'package:flutter_application_1/Features/home/view/nakhil_home.dart';
+import 'package:flutter_application_1/Features/home/widgets/cubit/select_category_cubit.dart';
+import 'package:flutter_application_1/Features/info/view_info.dart';
+import 'package:flutter_application_1/Features/save/view_save.dart';
+import 'package:flutter_application_1/Features/settings/view_settings.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 import 'package:get/get.dart';
-import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/gen/assets.gen.dart';
-import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
-import 'package:nakhil/Features/home/controller/nav_index.dart';
-import 'package:nakhil/Features/home/view/nakhil_home.dart';
-import 'package:nakhil/Features/info/view_info.dart';
-import 'package:nakhil/Features/save/view_save.dart';
-import 'package:nakhil/Features/settings/view_settings.dart';
+
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class NavBarCommon {
@@ -27,11 +30,16 @@ class NavBarCommon {
                 switch (p) {
                   case 0:
                     bloc.BlocProvider.of<ControllerApp>(context).changeState();
+                    bloc.BlocProvider.of<SelectCategoryCubit>(context)
+                        .initState(context);
+                    bloc.BlocProvider.of<NewsCubit>(context).fetchData(
+                        context: context, start: 0, limit: 20, catId: 0);
                     Get.to(const NakhilHome(),
                         transition: Transition.leftToRight);
                     break;
                   case 1:
-                    Get.to(SaveNews(), transition: Transition.leftToRight);
+                    Get.to(const SaveNews(),
+                        transition: Transition.leftToRight);
                     break;
                   case 2:
                     Get.to(Settings(), transition: Transition.leftToRight);

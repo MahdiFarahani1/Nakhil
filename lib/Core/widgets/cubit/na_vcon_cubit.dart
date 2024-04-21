@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-
-import 'package:nakhil/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
 
 part 'na_vcon_state.dart';
 

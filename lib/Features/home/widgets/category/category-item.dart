@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/cubit/news_cubit.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
+import 'package:flutter_application_1/Features/home/widgets/cubit/select_category_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
-import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
-import 'package:nakhil/Features/home/widgets/cubit/select_category_cubit.dart';
 
 // ignore: must_be_immutable
 class CatItem extends StatelessWidget {

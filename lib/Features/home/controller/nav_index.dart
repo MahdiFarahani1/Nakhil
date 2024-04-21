@@ -1,5 +1,5 @@
+import 'package:flutter_application_1/Features/home/model/nav_index.dart';
 import 'package:get/get.dart';
-import 'package:nakhil/Features/home/model/nav_index.dart';
 
 class NavController extends GetxController {
   late NavModel model;

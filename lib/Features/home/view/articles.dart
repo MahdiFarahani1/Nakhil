@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/cubit/news_cubit.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/cubit/status.dart';
+import 'package:flutter_application_1/Core/utils/category.dart';
+import 'package:flutter_application_1/Features/Search/controller/search_controller.dart';
+import 'package:flutter_application_1/Features/Search/view/view-search.dart';
+import 'package:flutter_application_1/Features/home/widgets/category/all_category.dart';
+import 'package:flutter_application_1/Features/home/widgets/cubit/select_category_cubit.dart';
+import 'package:flutter_application_1/Features/home/widgets/news/news-item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:nakhil/Core/const/const_method.dart';
-import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
-import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
-import 'package:nakhil/Core/services/news_cubit/cubit/status.dart';
-import 'package:nakhil/Core/utils/category.dart';
+import 'package:flutter_application_1/Core/const/const_method.dart';
 
-import 'package:nakhil/Core/utils/esay_size.dart';
-import 'package:nakhil/Core/utils/format_date.dart';
-import 'package:nakhil/Core/utils/loading.dart';
-import 'package:nakhil/Core/widgets/costum_drawer.dart';
-
-import 'package:nakhil/Core/widgets/coustom-appbar.dart';
-import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
-import 'package:nakhil/Core/widgets/navbar.dart';
-import 'package:nakhil/Features/Search/controller/search_controller.dart';
-import 'package:nakhil/Features/Search/view/view-search.dart';
-import 'package:nakhil/Features/home/widgets/category/all_category.dart';
-import 'package:nakhil/Features/home/widgets/cubit/select_category_cubit.dart';
-import 'package:nakhil/Features/home/widgets/news/news-item.dart';
+import 'package:flutter_application_1/Core/services/fetchContentApi/cubit/content_cubit.dart';
+import 'package:flutter_application_1/Core/utils/esay_size.dart';
+import 'package:flutter_application_1/Core/utils/format_date.dart';
+import 'package:flutter_application_1/Core/utils/loading.dart';
+import 'package:flutter_application_1/Core/widgets/costum_drawer.dart';
+import 'package:flutter_application_1/Core/widgets/coustom-appbar.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
+import 'package:flutter_application_1/Core/widgets/navbar.dart';
 
 class Articles extends StatefulWidget {
   const Articles({super.key});

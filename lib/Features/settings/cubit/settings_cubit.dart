@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:nakhil/Core/gen/fonts.gen.dart';
-import 'package:nakhil/main.dart';
+import 'package:flutter_application_1/Core/gen/fonts.gen.dart';
+import 'package:flutter_application_1/main.dart';
 
 part 'settings_state.dart';
 

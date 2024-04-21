@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/extensions/layout_ex.dart';
+import 'package:flutter_application_1/Core/gen/assets.gen.dart';
+import 'package:flutter_application_1/Core/utils/esay_size.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
+import 'package:flutter_application_1/Features/articles/view_art.dart';
+import 'package:flutter_application_1/Features/home/view/articles.dart';
+import 'package:flutter_application_1/Features/home/view/nakhil_home.dart';
+import 'package:flutter_application_1/Features/info/repository/aboutus_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart' as bloc;
 import 'package:get/get.dart';
-import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/extensions/layout_ex.dart';
-import 'package:nakhil/Core/gen/assets.gen.dart';
-import 'package:nakhil/Core/utils/esay_size.dart';
-import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
-import 'package:nakhil/Features/articles/view_art.dart';
-import 'package:nakhil/Features/home/view/articles.dart';
-import 'package:nakhil/Features/home/view/nakhil_home.dart';
-import 'package:nakhil/Features/info/repository/aboutus_repository.dart';
+
 import 'package:share/share.dart';
 
 class CostumDrawer {
@@ -85,7 +86,7 @@ class CostumDrawer {
               EsaySize.gap(8),
               ElevatedButton(
                 onPressed: () {
-                  Get.to(ViewArt(), transition: Transition.leftToRight);
+                  Get.to(const ViewArt(), transition: Transition.leftToRight);
                 },
                 style: styleBtn(),
                 child: Text(

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/utils/esay_size.dart';
+import 'package:flutter_application_1/Features/Splash/controller/videoplayer_controller.dart';
+import 'package:flutter_application_1/Features/settings/cubit/settings_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/utils/esay_size.dart';
-import 'package:nakhil/Features/Splash/controller/videoplayer_controller.dart';
-import 'package:nakhil/Features/settings/cubit/settings_cubit.dart';
+
 import 'package:video_player/video_player.dart';
 
 class SplashMain extends StatefulWidget {

@@ -1,28 +1,28 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/const/const_method.dart';
+import 'package:flutter_application_1/Core/extensions/layout_ex.dart';
+import 'package:flutter_application_1/Core/services/fetchContentApi/cubit/content_cubit.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/cubit/news_cubit.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/cubit/status.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/slider-bloc/slider_p_cubit.dart';
+import 'package:flutter_application_1/Core/utils/esay_size.dart';
+import 'package:flutter_application_1/Core/utils/format_date.dart';
+import 'package:flutter_application_1/Core/utils/loading.dart';
+import 'package:flutter_application_1/Core/widgets/costum_drawer.dart';
+import 'package:flutter_application_1/Core/widgets/coustom-appbar.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
+import 'package:flutter_application_1/Core/widgets/navbar.dart';
+import 'package:flutter_application_1/Features/Search/controller/search_controller.dart';
+import 'package:flutter_application_1/Features/Search/view/view-search.dart';
+import 'package:flutter_application_1/Features/click_news/view/Main_news_page.dart';
+import 'package:flutter_application_1/Features/home/cubit/nav_cubit.dart';
+import 'package:flutter_application_1/Features/home/widgets/news/news-item.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:nakhil/Core/const/const_method.dart';
-import 'package:nakhil/Core/extensions/layout_ex.dart';
-import 'package:nakhil/Core/services/fetchContentApi/cubit/content_cubit.dart';
-import 'package:nakhil/Core/services/news_cubit/cubit/news_cubit.dart';
-import 'package:nakhil/Core/services/news_cubit/cubit/status.dart';
-import 'package:nakhil/Core/services/news_cubit/slider-bloc/slider_p_cubit.dart';
-import 'package:nakhil/Core/utils/esay_size.dart';
-import 'package:nakhil/Core/utils/format_date.dart';
-import 'package:nakhil/Core/utils/loading.dart';
-import 'package:nakhil/Core/widgets/costum_drawer.dart';
-import 'package:nakhil/Core/widgets/coustom-appbar.dart';
-import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
-import 'package:nakhil/Core/widgets/navbar.dart';
-import 'package:nakhil/Features/Search/controller/search_controller.dart';
-import 'package:nakhil/Features/Search/view/view-search.dart';
-import 'package:nakhil/Features/click_news/view/Main_news_page.dart';
-import 'package:nakhil/Features/home/cubit/nav_cubit.dart';
-import 'package:nakhil/Features/home/widgets/news/news-item.dart';
 
 // ignore: must_be_immutable
 class ViewArt extends StatefulWidget {

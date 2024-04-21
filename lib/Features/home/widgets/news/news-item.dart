@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/extensions/layout_ex.dart';
+import 'package:flutter_application_1/Core/utils/esay_size.dart';
+import 'package:flutter_application_1/Core/utils/loading.dart';
+import 'package:flutter_application_1/Features/click_news/view/Main_news_page.dart';
 import 'package:get/get.dart';
-import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/extensions/layout_ex.dart';
-import 'package:nakhil/Core/utils/esay_size.dart';
-import 'package:nakhil/Core/utils/loading.dart';
-import 'package:nakhil/Features/click_news/view/Main_news_page.dart';
 
 class NewsItem extends StatelessWidget {
   final String path;

@@ -14,9 +14,13 @@ class ItemDatabase extends HiveObject {
 
   @HiveField(3)
   int id;
+
+  @HiveField(4)
+  String tag;
   ItemDatabase(
       {required this.img,
       required this.time,
       required this.title,
-      required this.id});
+      required this.id,
+      required this.tag});
 }

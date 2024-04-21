@@ -1,15 +1,15 @@
 import 'package:delayed_widget/delayed_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/const/const_color.dart';
+import 'package:flutter_application_1/Core/gen/assets.gen.dart';
+import 'package:flutter_application_1/Core/services/fetchSearch/cubit/search_cubit.dart';
+import 'package:flutter_application_1/Core/utils/esay_size.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
+import 'package:flutter_application_1/Features/Search/controller/search_controller.dart';
+import 'package:flutter_application_1/Features/Search/model/model_save_value_search.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:nakhil/Core/const/const_color.dart';
-import 'package:nakhil/Core/gen/assets.gen.dart';
-import 'package:nakhil/Core/services/fetchSearch/cubit/search_cubit.dart';
-import 'package:nakhil/Core/utils/esay_size.dart';
-import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
-import 'package:nakhil/Features/Search/controller/search_controller.dart';
-import 'package:nakhil/Features/Search/model/model_save_value_search.dart';
 
 class CommonAppbar {
   static var view = Get.put(SearchControllerMain());

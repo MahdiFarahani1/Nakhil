@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:nakhil/Core/services/provider_all.dart';
-
+import 'package:flutter_application_1/Core/services/provider_all.dart';
 part 'slider_p_state.dart';
 
 class SliderPCubit extends Cubit<SliderPState> {

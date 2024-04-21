@@ -21,13 +21,14 @@ class ItemDatabaseAdapter extends TypeAdapter<ItemDatabase> {
       time: fields[1] as int,
       title: fields[0] as String,
       id: fields[3] as int,
+      tag: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, ItemDatabase obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class ItemDatabaseAdapter extends TypeAdapter<ItemDatabase> {
       ..writeByte(2)
       ..write(obj.img)
       ..writeByte(3)
-      ..write(obj.id);
+      ..write(obj.id)
+      ..writeByte(4)
+      ..write(obj.tag);
   }
 
   @override

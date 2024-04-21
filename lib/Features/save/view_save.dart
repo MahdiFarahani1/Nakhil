@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Core/utils/format_date.dart';
+import 'package:flutter_application_1/Core/widgets/costum_drawer.dart';
+import 'package:flutter_application_1/Core/widgets/coustom-appbar.dart';
+import 'package:flutter_application_1/Core/widgets/navbar.dart';
+import 'package:flutter_application_1/Features/Search/controller/search_controller.dart';
+import 'package:flutter_application_1/Features/Search/view/view-search.dart';
+import 'package:flutter_application_1/Features/home/widgets/news/news-item.dart';
+import 'package:flutter_application_1/Features/save/cubit/save_news_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
-import 'package:nakhil/Core/utils/format_date.dart';
-import 'package:nakhil/Core/widgets/costum_drawer.dart';
 
-import 'package:nakhil/Core/widgets/coustom-appbar.dart';
-import 'package:nakhil/Core/widgets/navbar.dart';
-import 'package:nakhil/Features/Search/controller/search_controller.dart';
-import 'package:nakhil/Features/Search/view/view-search.dart';
-import 'package:nakhil/Features/home/widgets/news/news-item.dart';
-import 'package:nakhil/Features/save/cubit/save_news_cubit.dart';
+class SaveNews extends StatefulWidget {
+  const SaveNews({super.key});
 
-class SaveNews extends StatelessWidget {
-  SaveNews({super.key});
+  @override
+  State<SaveNews> createState() => _SaveNewsState();
+}
+
+class _SaveNewsState extends State<SaveNews> {
+  @override
+  void initState() {
+    BlocProvider.of<SaveNewsCubit>(context).loadSave(context);
+
+    super.initState();
+  }
 
   final TextEditingController textEditingController = TextEditingController();
 
@@ -32,8 +43,6 @@ class SaveNews extends StatelessWidget {
                     builder: (context, state) {
                       return ListView.builder(
                         itemBuilder: (context, index) {
-                          BlocProvider.of<SaveNewsCubit>(context)
-                              .loadSave(index);
                           return NewsItem(
                               path: state.savedItem[index].img,
                               title: state.savedItem[index].title,

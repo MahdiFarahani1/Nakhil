@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_1/Core/widgets/cubit/na_vcon_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nakhil/Core/widgets/cubit/na_vcon_cubit.dart';
 
 class ProviderAll {
   Future<Response<dynamic>> fetchAllData(

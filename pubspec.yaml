@@ -1,4 +1,4 @@
-name: nakhil
+name: flutter_application_1
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
+  sdk: ">=3.3.1 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -50,7 +50,8 @@ dependencies:
   getwidget: ^4.0.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-
+  firebase_core: ^2.25.5
+  firebase_messaging: ^14.7.17
   font_awesome_flutter: ^10.7.0
   share: ^2.0.4
 dev_dependencies:
@@ -81,7 +82,6 @@ flutter:
   assets:
     - assets/images/
     - assets/videos/
-  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -112,6 +112,5 @@ flutter:
         - asset: assets/fonts/Al-Jazeera-Arabic-Bold.ttf
           weight: 600
 
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

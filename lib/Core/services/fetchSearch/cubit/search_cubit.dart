@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:nakhil/Core/services/fetchAll/model/title_news_model.dart';
-import 'package:nakhil/Core/services/fetchSearch/cubit/status.dart';
-import 'package:nakhil/Core/services/fetchSearch/provider.dart';
+import 'package:flutter_application_1/Core/services/fetchAll/model/title_news_model.dart';
+import 'package:flutter_application_1/Core/services/fetchSearch/cubit/status.dart';
+import 'package:flutter_application_1/Core/services/fetchSearch/provider.dart';
 
 part 'search_state.dart';
 

@@ -1,6 +1,6 @@
+import 'package:flutter_application_1/Core/gen/assets.gen.dart';
+import 'package:flutter_application_1/Features/home/view/nakhil_home.dart';
 import 'package:get/get.dart';
-import 'package:nakhil/Core/gen/assets.gen.dart';
-import 'package:nakhil/Features/home/view/nakhil_home.dart';
 import 'package:video_player/video_player.dart';
 
 class VController extends GetxController {

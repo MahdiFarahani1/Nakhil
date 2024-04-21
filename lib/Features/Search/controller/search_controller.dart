@@ -1,5 +1,5 @@
+import 'package:flutter_application_1/Features/Search/model/search_model.dart';
 import 'package:get/get.dart';
-import 'package:nakhil/Features/Search/model/search_model.dart';
 
 class SearchControllerMain extends GetxController {
   late SearchModel model;

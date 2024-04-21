@@ -1,9 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:nakhil/Core/services/fetchAll/model/title_news_model.dart';
-import 'package:nakhil/Core/services/news_cubit/cubit/status.dart';
-import 'package:nakhil/Core/services/provider_all.dart';
+import 'package:flutter_application_1/Core/services/fetchAll/model/title_news_model.dart';
+import 'package:flutter_application_1/Core/services/news_cubit/cubit/status.dart';
+import 'package:flutter_application_1/Core/services/provider_all.dart';
 
 part 'news_state.dart';
 

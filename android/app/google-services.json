@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "720522902975",
+    "firebase_url": "https://iraqpalm-d9c2d.firebaseio.com",
+    "project_id": "iraqpalm-d9c2d",
+    "storage_bucket": "iraqpalm-d9c2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720522902975:android:073a47867c0697f71fb50a",
+        "android_client_info": {
+          "package_name": "com.dijlahit.iraq_palm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720522902975-v96g98st003c5n19fvpm5gnc80qo0pks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQb0_ZWW6fZiXRmXb2zT3qIC_roNZU160"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720522902975-v96g98st003c5n19fvpm5gnc80qo0pks.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "720522902975-5012qrtfntl0uoloa39r734kcim3k1vd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dijlahit.iraqpalm"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720522902975:android:73b1c528f6b539aa1fb50a",
+        "android_client_info": {
+          "package_name": "com.dijlahit.iraqpalm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "720522902975-v96g98st003c5n19fvpm5gnc80qo0pks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQb0_ZWW6fZiXRmXb2zT3qIC_roNZU160"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "720522902975-v96g98st003c5n19fvpm5gnc80qo0pks.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "720522902975-5012qrtfntl0uoloa39r734kcim3k1vd.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.dijlahit.iraqpalm"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

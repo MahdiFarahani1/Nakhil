@@ -150,6 +150,7 @@ class CommonAppbar {
                 controller: txt,
                 onSubmitted: (value) {
                   BlocProvider.of<SearchCubit>(context).search(
+                      context: context,
                       start: 0,
                       sw: SearchValue.sw,
                       sctitle: SearchValue.sctitle,

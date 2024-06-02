@@ -37,6 +37,7 @@ class _ViewSearchState extends State<ViewSearch> {
 
   void _scrollListener() {
     BlocProvider.of<SearchCubit>(context).loadMore(
+        context: context,
         categoryID: 0,
         controller: scrollController,
         sctitle: SearchValue.sctitle,
